@@ -19,10 +19,13 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm instalasssl
-s
+        run: npm install
+
       - name: Lint
         run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
 
       # - name: Run tests
       #   run: npm test
