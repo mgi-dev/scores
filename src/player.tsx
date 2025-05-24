@@ -1,47 +1,49 @@
 import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
-import {constants} from './constants'
+import {constants} from './constants';
+import { useStore } from './services/store';
 
 
 export const Player = ({name}: {name: string}) => {
+
   const [score, setScore] = useState(0);
   const [addedScore, setAddedScore] = useState(0);
-  
+
+  const hasWon = useStore((state: any) => state.hasWon);
+
   const handleSubmit = () => {
-        setScore(addedScore + score)
-        setAddedScore(Number(0))
-  }
-  
-  const hasWon = (): boolean => {
-    return  score >= 100 ? true : false
-  }
+
+    setScore(addedScore + score);
+    setAddedScore(Number(0));
+  };
+
 
   return (
     <View
       style={playerStyles.mainContainer}
     >
       <Text
-        style={{...playerStyles.playerName, color: hasWon() ? 'green': 'black'}}
+        style={{...playerStyles.playerName, color: hasWon(score) ? 'green' : 'black'}}
       >{name}</Text>
       <View style={playerStyles.scoreContainer}>
-      <Text style = {{...playerStyles.score, color: hasWon() ? 'green': 'black'}}>{score}</Text>
-      
-        <TextInput 
+      <Text style = {{...playerStyles.score, color: hasWon(score) ? 'green' : 'black'}}>{score}</Text>
+
+        <TextInput
         style = {playerStyles.scoreInput}
           keyboardType="numeric"
           onChangeText={(text) => {
-              setAddedScore(Number(text))
+              setAddedScore(Number(text));
           }}
           onSubmitEditing={handleSubmit}
-          value={addedScore != 0 ? String(addedScore): ""}
-          
+          value={addedScore != 0 ? String(addedScore) : ''}
+
           />
-      
-        <View style={{alignSelf: 'center',}}>
+
+        <View style={{alignSelf: 'center'}}>
           <TouchableOpacity
             onPress={()=> {
-              setScore(0)
-              setAddedScore(0)
+              setScore(0);
+              setAddedScore(0);
             }}
           >
             <Text>Reset</Text>
@@ -66,7 +68,7 @@ const playerStyles = StyleSheet.create({
     flexDirection: 'row',
     width: constants.windowWidth,
     justifyContent: 'space-evenly',
-    
+
   },
   playerName: {
     fontSize: constants.littleFont,
@@ -77,11 +79,11 @@ const playerStyles = StyleSheet.create({
     borderColor: '#ccc',
     color: 'black',
     borderWidth: 1,
-    
+
     backgroundColor: '#f9f9f9',
     alignSelf: 'center',
   },
   score: {
-    fontSize: constants.bigFont
-  }
+    fontSize: constants.bigFont,
+  },
 });

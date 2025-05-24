@@ -7,23 +7,21 @@
 
 import React from 'react';
 import {
-  useColorScheme,
   View,
 } from 'react-native';
 
-import {ScoreBoard} from './src/scoreBoard'
+import {ScoreBoard} from './src/scoreBoard';
+
+
 
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: "white",
-    flex: 1
+    backgroundColor: 'white',
+    flex: 1,
   };
 
-
-  const safePadding = '5%';
 
   return (
     <View style={backgroundStyle}>
