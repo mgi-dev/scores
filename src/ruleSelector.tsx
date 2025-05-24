@@ -2,8 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {Text, TextInput, View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { constants } from './constants';
-import { setRule } from './services/ruleService';
-
+import { useStore } from './services/store'
 
 type MyInputProps = {
   onPress: (menuStatus: boolean) => void;
@@ -12,13 +11,9 @@ type MyInputProps = {
 
 export const RuleSelector = (props: MyInputProps) => {
     
-    const [selectedValue, setSelectedValue] = useState(constants.rules.DEFAULT);
+    const selectedRule = useStore((state: any) => state.selectedRule);
+    const updateSelectedRule = useStore((state: any) => state.updateSelectedRule);
 
-
-    const setRule = (ruleName: string) => {
-        setSelectedValue(ruleName)
-        setRule(ruleName)
-    }
 
   return (
     <View
@@ -26,15 +21,17 @@ export const RuleSelector = (props: MyInputProps) => {
         >
         <Text>Règles : </Text>
         <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            selectedValue={selectedRule}
+            onValueChange={(itemValue, itemIndex) => {
+                updateSelectedRule(itemValue)
+            }}
             style={styles.picker}
             prompt="Règles à appliquer"
             dropdownIconColor='black'
             
         >
             <Picker.Item label="Aucune (Defaut)" value={constants.rules.DEFAULT} />
-            <Picker.Item label="Dumbal" value={constants.rules.DEFAULT} />
+            <Picker.Item label="Dumbal" value={constants.rules.DUMBAL} />
         </Picker>
       </View>
   );

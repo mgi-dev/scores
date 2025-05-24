@@ -14,6 +14,8 @@ import {
 import {ScoreBoard} from './src/scoreBoard'
 
 
+
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 

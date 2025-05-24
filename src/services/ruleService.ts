@@ -2,16 +2,10 @@
 import { constants } from './../constants';
 
 
-var selectedRule: string = constants.rules.DEFAULT
-
-
-
-export const setRule = (rule: string) => {
-    selectedRule = rule
-}
-
-export const hasWon = (score: number): boolean => {
+export const hasWon = (selectedRule: string, score: number): boolean => {
+    console.log(score, selectedRule)
     switch(selectedRule){
+
         case constants.rules.DEFAULT: {
             return defaultRule(score)
         }
@@ -23,7 +17,6 @@ export const hasWon = (score: number): boolean => {
         }
     }
 }
-
 
 
 const defaultRule = (score: number): boolean => {

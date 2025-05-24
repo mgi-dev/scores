@@ -1,30 +1,34 @@
 import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {constants} from './constants'
+import { hasWon } from './services/ruleService';
+import { useStore } from './services/store'
 
 
 export const Player = ({name}: {name: string}) => {
+  
   const [score, setScore] = useState(0);
   const [addedScore, setAddedScore] = useState(0);
   
+  const hasWon = useStore((state: any) => state.hasWon);
+  const selectedRule = useStore((state: any) => state.selectedRule);
+
   const handleSubmit = () => {
+    console.log("in component", selectedRule)
         setScore(addedScore + score)
         setAddedScore(Number(0))
   }
   
-  const hasWon = (): boolean => {
-    return  score >= 100 ? true : false
-  }
 
   return (
     <View
       style={playerStyles.mainContainer}
     >
       <Text
-        style={{...playerStyles.playerName, color: hasWon() ? 'green': 'black'}}
+        style={{...playerStyles.playerName, color: hasWon(score) ? 'green': 'black'}}
       >{name}</Text>
       <View style={playerStyles.scoreContainer}>
-      <Text style = {{...playerStyles.score, color: hasWon() ? 'green': 'black'}}>{score}</Text>
+      <Text style = {{...playerStyles.score, color: hasWon(score) ? 'green': 'black'}}>{score}</Text>
       
         <TextInput 
         style = {playerStyles.scoreInput}
