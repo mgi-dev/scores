@@ -4,12 +4,8 @@ import {Picker} from '@react-native-picker/picker';
 import { constants } from './constants';
 import { useStore } from './services/store'
 
-type MyInputProps = {
-  onPress: (menuStatus: boolean) => void;
-};
 
-
-export const RuleSelector = (props: MyInputProps) => {
+export const RuleSelector = () => {
     
     const selectedRule = useStore((state: any) => state.selectedRule);
     const updateSelectedRule = useStore((state: any) => state.updateSelectedRule);

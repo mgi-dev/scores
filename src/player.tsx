@@ -14,9 +14,9 @@ export const Player = ({name}: {name: string}) => {
   const selectedRule = useStore((state: any) => state.selectedRule);
 
   const handleSubmit = () => {
-    console.log("in component", selectedRule)
-        setScore(addedScore + score)
-        setAddedScore(Number(0))
+
+    setScore(addedScore + score)
+    setAddedScore(Number(0))
   }
   
 

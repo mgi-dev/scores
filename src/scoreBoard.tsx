@@ -3,6 +3,7 @@ import { Button, FlatList, Text, TouchableOpacity, View, SafeAreaView, StyleShee
 import {Player} from './player'
 
 import {Menu} from './menu'
+import { useStore } from './services/store';
 
 class PlayerData {
 
@@ -16,28 +17,18 @@ class PlayerData {
 }
 
 export const ScoreBoard = () => {
-    const [players, setPlayers] = useState<PlayerData[]>([]);
-
-
-    const addNewPlayer = (playerName: string) => {
-        setPlayers([
-          ...players, 
-          new PlayerData(playerName, String(players.length + 1))
-        ]);
-    }
-  
-  
+    
+    const playersData = useStore((state: any) => state.playersData);
+      
 
   return (
         <View>
           <Menu
-            addNewPlayer={addNewPlayer}
-            resetGame={() => setPlayers([])}
           />
           <Text></Text>
           <Text></Text>
           <FlatList
-            data={players}
+            data={playersData}
             renderItem={({item}) => <Player name={item.name} />}
             keyExtractor={item => item.key}              
           />

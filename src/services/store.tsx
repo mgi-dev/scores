@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 import { constants } from "./../constants";
 
+interface PlayerData {
+  name: string;
+  score: number;
+  key?: string;
+}
+
 
 export const useStore = create((set, get: any) => ({
     selectedRule: constants.rules.DEFAULT,
@@ -15,8 +21,17 @@ export const useStore = create((set, get: any) => ({
         return hasWon(selectedRule, score);
     },  
 
-    // playersData: [],
-    // addPlayerData: (value: number) => set({playersData: playersData}),  
+    playersData: [],
+    addPlayer: (playerName: string) => {
+        const playersData = get().playersData
+        let newPlayerData = {
+            name: playerName,
+            score: 0,
+            key: String(Number(playersData.length) + 1),
+        }
+        set({playersData: [...get().playersData, newPlayerData]})
+    },  
+    deletePLayers: () => set({playersData: []}),  
 
 }));
 

@@ -4,40 +4,19 @@ import { constants } from './constants';
 import { StripeButton } from './stripeButton';
 import {NewPlayerInput} from './newPlayerInput'
 import { RuleSelector } from './ruleSelector';
+import { useStore } from './services/store';
 
-
-type MyInputProps = {
-  addNewPlayer: (value: string) => void;
-  resetGame: () => void;
-};
-
-class PlayerData {
-
-    name: string
-    key: string
-
-  constructor(name: string, key: string) {
-    this.name = name;
-    this.key = key;
-  }
-}
 
 const menu_size = 250
 
-export const Menu = (props: MyInputProps) => {
-
+export const Menu = () => {
+    
     const [menuStatus, setMenusStatus] = useState(false);
     const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : - (menu_size - 30))).current; // départ invisible
-    
-    // useEffect(() => {
-    //      Animated.timing(slideAnim, {
-    //      toValue: 0,
-    //      duration: 1000,
-    //      useNativeDriver: true,
-    //      }).start();
-    //  }, [slideAnim]);
+    const addPlayer = useStore((state: any) => state.addPlayer);
+    const deletePLayers = useStore((state: any) => state.deletePLayers);
 
-
+  
     const toggleMenu = () => {
         setMenusStatus(!menuStatus)
         Animated.timing(slideAnim, {
@@ -57,7 +36,7 @@ export const Menu = (props: MyInputProps) => {
         return __DEV__  ?
             <TouchableOpacity
                 onPress={()=> {
-                    props.addNewPlayer("Jean Michel")
+                    addPlayer("Jean Michel")
                 }}
                 >
                 <Text>ADD</Text>
@@ -76,10 +55,10 @@ export const Menu = (props: MyInputProps) => {
                 style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}
             >
             
-            <NewPlayerInput onSubmit={props.addNewPlayer}/>
+            <NewPlayerInput />
             <TouchableOpacity
                 onPress={()=> {
-                    props.resetGame()
+                    deletePLayers()
                 }}
             >
             <Text>Reset</Text>

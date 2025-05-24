@@ -1,21 +1,18 @@
 import React, {useState, useCallback} from 'react';
 import {Text, TextInput, View, StyleSheet} from 'react-native';
 import { constants } from './constants';
-
-type MyInputProps = {
-  onSubmit: (value: string) => void;
-};
+import { useStore } from './services/store';
 
 
-export const NewPlayerInput = (props: MyInputProps) => {
+export const NewPlayerInput = () => {
     
     const [name, setName] = useState('');
-  
+    const addPlayer = useStore((state: any) => state.addPlayer);
+
+
     const handleSubmit = () => {
-      console.log(name)  
-      props.onSubmit(name)
-        setName('');
-        console.log(name)
+      addPlayer(name)
+      setName('');
     }
 
   return (
