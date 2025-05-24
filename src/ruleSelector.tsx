@@ -1,12 +1,12 @@
-import React, {useState, useCallback} from 'react';
-import {Text, TextInput, View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import React from 'react';
+import {Text, View, StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { constants } from './constants';
-import { useStore } from './services/store'
+import { useStore } from './services/store';
 
 
 export const RuleSelector = () => {
-    
+
     const selectedRule = useStore((state: any) => state.selectedRule);
     const updateSelectedRule = useStore((state: any) => state.updateSelectedRule);
 
@@ -18,13 +18,13 @@ export const RuleSelector = () => {
         <Text>Règles : </Text>
         <Picker
             selectedValue={selectedRule}
-            onValueChange={(itemValue, itemIndex) => {
-                updateSelectedRule(itemValue)
+            onValueChange={(itemValue, _) => {
+                updateSelectedRule(itemValue);
             }}
             style={styles.picker}
             prompt="Règles à appliquer"
-            dropdownIconColor='black'
-            
+            dropdownIconColor="black"
+
         >
             <Picker.Item label="Aucune (Defaut)" value={constants.rules.DEFAULT} />
             <Picker.Item label="Dumbal" value={constants.rules.DUMBAL} />
@@ -37,7 +37,7 @@ export const RuleSelector = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   picker: {
     height: 50,

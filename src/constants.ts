@@ -1,10 +1,6 @@
 import {Dimensions} from 'react-native';
 
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-
 export const constants = {
     littleFont: 16,
     mediumFont: 22,
@@ -15,7 +11,7 @@ export const constants = {
     rules: {
         DEFAULT: 'default',
         DUMBAL: 'dumbal',
-    }
-}
+    },
+};
 
 

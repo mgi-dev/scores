@@ -1,48 +1,47 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {Animated, Text, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
-import { constants } from './constants';
+import React, {useState, useRef} from 'react';
+import {Animated, Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import { StripeButton } from './stripeButton';
-import {NewPlayerInput} from './newPlayerInput'
+import {NewPlayerInput} from './newPlayerInput';
 import { RuleSelector } from './ruleSelector';
 import { useStore } from './services/store';
 
 
-const menu_size = 250
+const menu_size = 250;
 
 export const Menu = () => {
-    
+
     const [menuStatus, setMenusStatus] = useState(false);
-    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : - (menu_size - 30))).current; // départ invisible
+    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : -(menu_size - 30))).current; // départ invisible
     const addPlayer = useStore((state: any) => state.addPlayer);
     const deletePLayers = useStore((state: any) => state.deletePLayers);
 
-  
+
     const toggleMenu = () => {
-        setMenusStatus(!menuStatus)
+        setMenusStatus(!menuStatus);
         Animated.timing(slideAnim, {
-        toValue: menuStatus ? 0 : - (menu_size - 30),
+        toValue: menuStatus ? 0 : -(menu_size - 30),
         duration: 350,
         useNativeDriver: true,
         }).start();
     };
 
-    
+
     const getContainerCss = () => {
-        return menuStatus ? styles.menuContainerDeployed: styles.menuContainerFolded
-    }
-    
-    
+        return menuStatus ? styles.menuContainerDeployed : styles.menuContainerFolded;
+    };
+
+
     const getDevContent = () => {
         return __DEV__  ?
             <TouchableOpacity
                 onPress={()=> {
-                    addPlayer("Jean Michel")
+                    addPlayer('Jean Michel');
                 }}
                 >
                 <Text>ADD</Text>
             </TouchableOpacity>
-            : <Text></Text>
-    }
+            : <Text />;
+    };
 
 
 
@@ -54,11 +53,11 @@ export const Menu = () => {
             <View
                 style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}
             >
-            
+
             <NewPlayerInput />
             <TouchableOpacity
                 onPress={()=> {
-                    deletePLayers()
+                    deletePLayers();
                 }}
             >
             <Text>Reset</Text>
@@ -70,7 +69,7 @@ export const Menu = () => {
             <StripeButton onPress={toggleMenu}/>
         </View>
     </Animated.View>
-    
+
   );
 };
 
@@ -87,12 +86,12 @@ const styles = StyleSheet.create({
 
     },
     menuContainerDeployed: {
-        
+
     },
     menuContainerFolded: {
-        
+
     },
     menuContainer: {
 
-    }
+    },
 });
