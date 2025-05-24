@@ -55,6 +55,7 @@ export const Menu = () => {
             >
 
             <NewPlayerInput />
+            
             <TouchableOpacity
                 onPress={()=> {
                     deletePLayers();
