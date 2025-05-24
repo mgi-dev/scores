@@ -49,7 +49,7 @@ export const Menu = () => {
     <Animated.View style={{...styles.mainContainer, ...getContainerCss(), ...{ transform: [{ translateY: slideAnim }] }}}>
         <View style={{...styles.menuContainer}}>
             {getDevContent()}
-            <View/>
+        <View/>
             <View
                 style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}
             >
