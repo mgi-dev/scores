@@ -6,6 +6,8 @@
 - Plug score management to zustand.
 - Fix Menu animation.
 
+### Fixed
+- Fix initial score behaviour
 
 ## 0.2.1
 

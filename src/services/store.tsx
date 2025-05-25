@@ -52,7 +52,7 @@ export const useStore = create<GameStore>((set, get: any) => ({
         const playersData = get().playersData;
         let newPlayerData = {
             name: playerName,
-            score: 0,
+            score: get().initialScore,
             key: String(Number(playersData.length) + 1),
             hasWon: false,
         };
