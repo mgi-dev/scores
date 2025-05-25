@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {constants} from './constants';
-import { useStore } from './services/store';
+import { useStore, GameStore } from './services/store';
+import { updateScore } from './services/score_service';
 
 
 export const Player = ({name}: {name: string}) => {
@@ -9,12 +10,14 @@ export const Player = ({name}: {name: string}) => {
   const [score, setScore] = useState(0);
   const [addedScore, setAddedScore] = useState(0);
 
-  const hasWon = useStore((state: any) => state.hasWon);
+  const operation = useStore((state: GameStore) => state.operation);
+
+  const hasWon = useStore((state: GameStore) => state.hasWon);
 
   const handleSubmit = () => {
-
-    setScore(addedScore + score);
-    setAddedScore(Number(0));
+    
+    setScore(updateScore(score, addedScore, operation));
+    setAddedScore(0);
   };
 
 

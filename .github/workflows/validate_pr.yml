@@ -29,3 +29,20 @@ jobs:
 
       # - name: Run tests
       #   run: npm test
+
+      - name: Check changelog
+        run: |
+          git fetch origin main
+          if git diff master --name-only | grep CHANGELOG; then
+            echo "changelog_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "changelog_modified=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Post changelog comment
+        if: steps.check_changelog.outputs.changelog_modified == 'false'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Et le changelog il vient à pied ?
