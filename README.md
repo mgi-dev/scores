@@ -52,8 +52,5 @@ npm run react-native-doctor
 # Installing on local device
 
 ```sh
-cd android
-./gradlew assembleRelease
-adb install app/build/outputs/apk/release/app-release.apk
-cd ..
+npm run build-install
 ```
