@@ -32,7 +32,7 @@ jobs:
 
       - name: Check changelog
         run: |
-          git fetch origin main
+          git fetch origin master
           if git diff master --name-only | grep CHANGELOG; then
             echo "changelog_modified=true" >> $GITHUB_OUTPUT
           else
