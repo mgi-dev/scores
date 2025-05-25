@@ -10,8 +10,7 @@ type MyInputProps = {
 export const StripeButton = (props: MyInputProps) => {
 
     const [menuStatus, setMenusStatus] = useState(false);
-    // Hack to correctly apply transformation on startup.
-    const [layoutReady, setLayoutReady] = useState(false);
+    
 
     const getContainerCssForStatus = () => {
         return menuStatus ? {transform: [ { rotate: '180deg' }]} : {};
@@ -29,7 +28,7 @@ export const StripeButton = (props: MyInputProps) => {
 
         }}
     >
-        <View onLayout={() => setLayoutReady(true)}>
+        <View>
             <View style={{...styles.lineContainer, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
