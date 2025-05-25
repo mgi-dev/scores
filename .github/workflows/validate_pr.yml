@@ -9,7 +9,8 @@ jobs:
 
   validate:
     runs-on: ubuntu-latest
-    
+    permissions: 
+      pull-requests: write 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,8 +43,6 @@ jobs:
           fi
       
       - name: Post changelog comment
-        permissions: 
-          pull-requests: write 
         if: steps.check_changelog.outputs.changelog_modified == 'false'
         uses: thollander/actions-comment-pull-request@v3
         with:
