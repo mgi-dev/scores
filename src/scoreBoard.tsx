@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlatList, Text, View} from 'react-native';
+import { ScrollView, Text, View} from 'react-native';
 import {Player} from './player';
 
 import {Menu} from './menu';
-import { useStore } from './services/store';
+import { useStore, PlayerData } from './services/store';
 
 
 export const ScoreBoard = () => {
@@ -16,11 +16,16 @@ export const ScoreBoard = () => {
           <Menu/>
           <Text />
           <Text />
-          <FlatList
-            data={playersData}
-            renderItem={({item}) => <Player name={item.name} />}
-            keyExtractor={item => item.key}
-          />
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ paddingVertical: 8 , paddingBottom: 200}}
+          >
+            {playersData.map((item: PlayerData) => (
+              <View key={item.key} style={{ marginBottom: 12 }}>
+                <Player name={item.name} />
+              </View>
+            ))}
+          </ScrollView>
         </View>
   );
 };

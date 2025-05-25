@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { constants } from './../constants';
 import { hasWon } from './score_service';
 
-interface PlayerData {
+export interface PlayerData {
   name: string;
   score: number;
   key?: string;
