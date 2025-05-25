@@ -2,21 +2,20 @@ import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {constants} from './constants';
 import { useStore, GameStore } from './services/store';
-import { updateScore } from './services/score_service';
+import { PlayerData } from './services/interfaces';
 
 
-export const Player = ({name}: {name: string}) => {
 
-  const [score, setScore] = useState(0);
+export const Player = ({playerData}: {playerData: PlayerData}) => {
+
   const [addedScore, setAddedScore] = useState(0);
 
-  const operation = useStore((state: GameStore) => state.operation);
+  const updatePlayerScore= useStore((state: GameStore) => state.updatePlayerScore);
+  const resetPlayerScore= useStore((state: GameStore) => state.resetPlayerScore);
 
-  const hasWon = useStore((state: GameStore) => state.hasWon);
 
-  const handleSubmit = () => {
-
-    setScore(updateScore(score, addedScore, operation));
+  const handleSubmit = () => {    
+    updatePlayerScore(playerData, addedScore)
     setAddedScore(0);
   };
 
@@ -26,10 +25,10 @@ export const Player = ({name}: {name: string}) => {
       style={playerStyles.mainContainer}
     >
       <Text
-        style={{...playerStyles.playerName, color: hasWon(score) ? 'green' : 'black'}}
-      >{name}</Text>
+        style={{...playerStyles.playerName, color: playerData.hasWon ? 'green' : 'black'}}
+      >{playerData.name}</Text>
       <View style={playerStyles.scoreContainer}>
-      <Text style = {{...playerStyles.score, color: hasWon(score) ? 'green' : 'black'}}>{score}</Text>
+      <Text style = {{...playerStyles.score, color: playerData.hasWon ? 'green' : 'black'}}>{playerData.score}</Text>
 
         <TextInput
         style = {playerStyles.scoreInput}
@@ -45,7 +44,7 @@ export const Player = ({name}: {name: string}) => {
         <View style={{alignSelf: 'center'}}>
           <TouchableOpacity
             onPress={()=> {
-              setScore(0);
+              resetPlayerScore(playerData)
               setAddedScore(0);
             }}
           >

@@ -3,12 +3,13 @@ import { ScrollView, Text, View} from 'react-native';
 import {Player} from './player';
 
 import {Menu} from './menu';
-import { useStore, PlayerData } from './services/store';
+import { GameStore, useStore } from './services/store';
+import { PlayerData } from './services/interfaces';
 
 
 export const ScoreBoard = () => {
 
-    const playersData = useStore((state: any) => state.playersData);
+    const playersData = useStore((state: GameStore) => state.playersData);
 
 
   return (
@@ -22,7 +23,7 @@ export const ScoreBoard = () => {
           >
             {playersData.map((item: PlayerData) => (
               <View key={item.key} style={{ marginBottom: 12 }}>
-                <Player name={item.name} />
+                <Player playerData={item} />
               </View>
             ))}
           </ScrollView>
