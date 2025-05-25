@@ -61,20 +61,15 @@ export const useStore = create<GameStore>((set, get: any) => ({
     deletePLayers: () => set({playersData: []}),
     
     updatePlayerScore: (newPlayerData: PlayerData, addedScore: number) => {
-        
-        let selectedPlayer: PlayerData = get().playersData.find((player: PlayerData) => player.key == newPlayerData.key)
-        selectedPlayer.score = updateScore(selectedPlayer.score, addedScore, get().operation)
-        selectedPlayer.hasWon = get().hasWon(selectedPlayer.score)
-
+        // it's mutating but it's working.
+        newPlayerData.score = updateScore(newPlayerData.score, addedScore, get().operation)
+        newPlayerData.hasWon = get().hasWon(newPlayerData.score)
         set({playersData: [...get().playersData]});
     },
 
     resetPlayerScore: (playerData: PlayerData) => {
-        
-        let selectedPlayer: PlayerData = get().playersData.find((player: PlayerData) => player.key == playerData.key)
-        selectedPlayer.score = get().initialScore
-        selectedPlayer.hasWon = get().hasWon(selectedPlayer.score)
-        
+        playerData.score = get().initialScore
+        playerData.hasWon = get().hasWon(playerData.score)
         set({playersData: [...get().playersData]});
     },
 
