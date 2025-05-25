@@ -6,6 +6,8 @@ on:
     branches: [master]
 
 jobs:
+  permissions: 
+    pull-requests: write 
   validate:
     runs-on: ubuntu-latest
 
@@ -47,3 +49,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           message: |
             Et le changelog il vient à pied ?
+          pr-number: ${{ github.event.pull_request.number }}
