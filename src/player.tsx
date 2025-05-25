@@ -3,7 +3,7 @@ import {Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native'
 import {constants} from './constants';
 import { useStore, GameStore } from './services/store';
 import { PlayerData } from './services/interfaces';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export const Player = ({playerData}: {playerData: PlayerData}) => {
@@ -48,6 +48,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
               setAddedScore(0);
             }}
           >
+            <Icon name="refresh" size={30} color="#000" />
             <Text>Reset</Text>
           </TouchableOpacity>
         </View>

@@ -1,3 +1,18 @@
+## 0.4.7
+### Added
+- Deployment pipeline
+- Add icons
+
+## 0.3.3
+### Changed
+- Update readme.
+- Rename App
+
+### Added
+- Add license
+- Add Icons
+- Add app signin
+
 
 ## 0.2.3
 

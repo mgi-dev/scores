@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 import { StripeButton } from './stripeButton';
 import {NewPlayerInput} from './newPlayerInput';
 import { RuleSelector } from './ruleSelector';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useStore, GameStore } from './services/store';
 import { constants } from './constants';
@@ -78,6 +79,7 @@ export const Menu = () => {
                     deletePLayers();
                 }}
             >
+            <Icon name="refresh" size={30} color="#000" />
             <Text>Reset</Text>
             </TouchableOpacity>
         </View>
@@ -171,6 +173,7 @@ operationPickerContainer: {
   },
     inputStyle: {
     height: 50,
+    width: 100,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
