@@ -31,6 +31,7 @@ jobs:
       #   run: npm test
 
       - name: Check changelog
+        id: check_changelog
         run: |
           git fetch origin master
           if git diff origin/master --name-only | grep CHANGELOG; then
