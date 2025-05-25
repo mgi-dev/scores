@@ -15,7 +15,7 @@ export const Player = ({name}: {name: string}) => {
   const hasWon = useStore((state: GameStore) => state.hasWon);
 
   const handleSubmit = () => {
-    
+
     setScore(updateScore(score, addedScore, operation));
     setAddedScore(0);
   };
@@ -38,7 +38,7 @@ export const Player = ({name}: {name: string}) => {
               setAddedScore(Number(text));
           }}
           onSubmitEditing={handleSubmit}
-          value={addedScore != 0 ? String(addedScore) : ''}
+          value={addedScore !== 0 ? String(addedScore) : ''}
 
           />
 

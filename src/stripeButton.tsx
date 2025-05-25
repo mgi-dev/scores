@@ -10,7 +10,7 @@ type MyInputProps = {
 export const StripeButton = (props: MyInputProps) => {
 
     const [menuStatus, setMenusStatus] = useState(false);
-    
+
 
     const getContainerCssForStatus = () => {
         return menuStatus ? {transform: [ { rotate: '180deg' }]} : {};
@@ -19,7 +19,7 @@ export const StripeButton = (props: MyInputProps) => {
 
 
   return (
-    
+
     <TouchableWithoutFeedback
         hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
         onPress={() => {

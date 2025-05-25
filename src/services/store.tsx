@@ -17,10 +17,10 @@ export interface GameStore {
 
     targetScore: number;
     updateTargetScore: (value: number) => void;
-    
+
     operation: string;
     updateOperation: (value: string) => void;
-    
+
 
     hasWon: (score: number) => boolean;
 
@@ -42,7 +42,7 @@ export const useStore = create<GameStore>((set, get: any) => ({
 
     operation: constants.operations.ADD,
     updateOperation: (value: string) => set({operation: value}),
-    
+
 
     hasWon: (score: number) => {
         const selectedRule = get().selectedRule;
