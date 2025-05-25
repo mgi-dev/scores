@@ -1,4 +1,12 @@
 
+
+## 0.2.2
+
+### Changed
+- Plug score management to zustand.
+- Fix Menu animation.
+
+
 ## 0.2.1
 
 ### Fixed
