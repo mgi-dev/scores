@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 20 * stripeScale,
     borderBottomWidth: 2,
     borderColor: '#000',
+    backgroundColor: '#EDEDED',
   },
   leftMidleLine: {
     transform: [ { rotate: '30deg' }],

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { constants } from './../constants';
+import { hasWon } from './score_service';
 
 interface PlayerData {
   name: string;
@@ -7,12 +8,19 @@ interface PlayerData {
   key?: string;
 }
 
-interface GameStore {
+export interface GameStore {
     selectedRule: string;
     updateSelectedRule: (value: string) => void;
 
+    initialScore: number;
+    updateInitialScore: (value: number) => void;
+
     targetScore: number;
     updateTargetScore: (value: number) => void;
+    
+    operation: string;
+    updateOperation: (value: string) => void;
+    
 
     hasWon: (score: number) => boolean;
 
@@ -26,13 +34,20 @@ export const useStore = create<GameStore>((set, get: any) => ({
     selectedRule: constants.rules.DEFAULT,
     updateSelectedRule: (value: string) => set({selectedRule: value}),
 
+    initialScore: 0,
+    updateInitialScore: (value: number) => set({initialScore: value}),
+
     targetScore: 100,
     updateTargetScore: (value: number) => set({targetScore: value}),
+
+    operation: constants.operations.ADD,
+    updateOperation: (value: string) => set({operation: value}),
+    
 
     hasWon: (score: number) => {
         const selectedRule = get().selectedRule;
         console.log('mhhh', selectedRule);
-        return hasWon(selectedRule, score);
+        return hasWon(selectedRule, score, get().targetScore, get().operation);
     },
 
     playersData: [],
@@ -48,28 +63,3 @@ export const useStore = create<GameStore>((set, get: any) => ({
     deletePLayers: () => set({playersData: []}),
 
 }));
-
-
-
-const hasWon = (selectedRule: string, score: number): boolean => {
-    switch(selectedRule){
-        case constants.rules.DEFAULT: {
-            return defaultRule(score);
-        }
-        case constants.rules.DUMBAL: {
-            return dumbalRule(score);
-        }
-        default: {
-            return false;
-        }
-    }
-};
-
-
-const defaultRule = (score: number): boolean => {
-    return score >= 100;
-};
-
-const dumbalRule = (score: number): boolean => {
-    return score >= 100;
-};

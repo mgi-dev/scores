@@ -6,6 +6,7 @@ on:
     branches: [master]
 
 jobs:
+
   validate:
     runs-on: ubuntu-latest
 
@@ -29,3 +30,32 @@ jobs:
 
       # - name: Run tests
       #   run: npm test
+
+      - name: Check changelog
+        id: check_changelog
+        run: |
+          git fetch origin master
+          if git diff origin/master --name-only | grep CHANGELOG; then
+            echo "changelog_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "changelog_modified=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Post changelog comment
+        if: steps.check_changelog.outputs.changelog_modified == 'false'
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            Et le changelog il vient à pied ?
+          pr-number: ${{ github.event.pull_request.number }}
+          comment-tag: changelog_comment
+
+      - name: Post changelog comment
+        if: steps.check_changelog.outputs.changelog_modified == 'true'
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.pull_request.number }}
+          comment-tag: changelog_comment
+          mode: delete

@@ -12,6 +12,10 @@ export const constants = {
         DEFAULT: 'default',
         DUMBAL: 'dumbal',
     },
+    operations: {
+        ADD: "ADD",
+        SUB: "SUB"
+    }
 };
 
 
