@@ -33,7 +33,7 @@ jobs:
       - name: Check changelog
         run: |
           git fetch origin master
-          if !git diff master --name-only | grep CHANGELOG; then
+          if git diff origin/master --name-only | grep CHANGELOG; then
             echo "changelog_modified=true" >> $GITHUB_OUTPUT
           else
             echo "changelog_modified=false" >> $GITHUB_OUTPUT
