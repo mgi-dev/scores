@@ -54,10 +54,12 @@ jobs:
       - name: Build signed APK
         working-directory: android
         run: ./gradlew assembleRelease
-          
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+                
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: scores-${{ github.ref_name }}.apk
-          path: android/app/build/outputs/apk/release/app-release.apk
-          if-no-files-found: error
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          files: android/app/build/outputs/apk/release/scores-${{ github.ref_name }}.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
