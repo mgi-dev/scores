@@ -1,12 +1,7 @@
 import { create } from 'zustand';
 import { constants } from './../constants';
-import { hasWon } from './score_service';
-
-export interface PlayerData {
-  name: string;
-  score: number;
-  key?: string;
-}
+import { hasWon, updateScore } from './score_service';
+import {PlayerData} from './interfaces';
 
 export interface GameStore {
     selectedRule: string;
@@ -27,8 +22,11 @@ export interface GameStore {
     playersData: PlayerData[];
     addPlayer: (playerName: string) => void;
     deletePLayers: () => void;
+    updatePlayerScore: (playerData: PlayerData, addedScore: number) => void
+    resetPlayerScore: (playerData: PlayerData) => void
 
 }
+
 
 export const useStore = create<GameStore>((set, get: any) => ({
     selectedRule: constants.rules.DEFAULT,
@@ -46,7 +44,6 @@ export const useStore = create<GameStore>((set, get: any) => ({
 
     hasWon: (score: number) => {
         const selectedRule = get().selectedRule;
-        console.log('mhhh', selectedRule);
         return hasWon(selectedRule, score, get().targetScore, get().operation);
     },
 
@@ -57,9 +54,28 @@ export const useStore = create<GameStore>((set, get: any) => ({
             name: playerName,
             score: 0,
             key: String(Number(playersData.length) + 1),
+            hasWon: false,
         };
         set({playersData: [...get().playersData, newPlayerData]});
     },
     deletePLayers: () => set({playersData: []}),
+    
+    updatePlayerScore: (newPlayerData: PlayerData, addedScore: number) => {
+        
+        let selectedPlayer: PlayerData = get().playersData.find((player: PlayerData) => player.key == newPlayerData.key)
+        selectedPlayer.score = updateScore(selectedPlayer.score, addedScore, get().operation)
+        selectedPlayer.hasWon = get().hasWon(selectedPlayer.score)
+
+        set({playersData: [...get().playersData]});
+    },
+
+    resetPlayerScore: (playerData: PlayerData) => {
+        
+        let selectedPlayer: PlayerData = get().playersData.find((player: PlayerData) => player.key == playerData.key)
+        selectedPlayer.score = get().initialScore
+        selectedPlayer.hasWon = get().hasWon(selectedPlayer.score)
+        
+        set({playersData: [...get().playersData]});
+    },
 
 }));
