@@ -18,7 +18,7 @@ import {ScoreBoard} from './src/scoreBoard';
 function App(): React.JSX.Element {
 
   const backgroundStyle = {
-    backgroundColor: 'white',
+    backgroundColor: '#E6F5FB',
     flex: 1,
   };
 

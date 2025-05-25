@@ -62,6 +62,7 @@ const playerStyles = StyleSheet.create({
   mainContainer: {
     margin: 10,
     borderWidth: 1,
+    borderColor:'rgb(177, 183, 185)',
     borderRadius: 8,
     paddingBottom:8,
     backgroundColor: '#f5f5f5',

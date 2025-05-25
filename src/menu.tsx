@@ -104,7 +104,7 @@ export const Menu = () => {
             <TextInput
                 style = {styles.inputStyle}
                 keyboardType="numeric"
-                value={String(initialScore)}
+                value={initialScore !== 0 ? String(initialScore) : ''}
                 onChangeText={(score) => {
                     updateInitialScore(Number(score));
                 }}
@@ -117,7 +117,7 @@ export const Menu = () => {
             <TextInput
                 style = {styles.inputStyle}
                 keyboardType="numeric"
-                value={String(targetScore)}
+                value={targetScore !== 0 ? String(targetScore) : ''}
                 onChangeText={(score) => {
                     updateTargetScore(Number(score));
                 }}
