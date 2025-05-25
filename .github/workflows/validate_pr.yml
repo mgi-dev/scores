@@ -49,3 +49,4 @@ jobs:
           message: |
             Et le changelog il vient à pied ?
           pr-number: ${{ github.event.pull_request.number }}
+          comment-tag: changelog_comment
