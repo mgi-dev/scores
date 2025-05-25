@@ -42,9 +42,8 @@ jobs:
       
       - name: Post changelog comment
         if: steps.check_changelog.outputs.changelog_modified == 'false'
-        uses: peter-evans/create-or-update-comment@v4
+        uses: thollander/actions-comment-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
+          message: |
             Et le changelog il vient à pied ?
