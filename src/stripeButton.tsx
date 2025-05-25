@@ -26,7 +26,7 @@ export const StripeButton = (props: MyInputProps) => {
 
         }}
     >
-        <View style={{}}>
+        <View>
             <View style={{...styles.lineContainer, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
@@ -46,7 +46,6 @@ export const StripeButton = (props: MyInputProps) => {
 
 
 const stripeScale = 0.5;
-// const stripeScale = 1.0
 
 const styles = StyleSheet.create({
   lineContainer: {
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
     marginTop: 20 * stripeScale,
     borderBottomWidth: 2,
     borderColor: '#000',
-    backgroundColor: '#EDEDED',
   },
   leftMidleLine: {
     transform: [ { rotate: '30deg' }],

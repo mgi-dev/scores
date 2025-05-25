@@ -13,7 +13,7 @@ const menu_size = 350;
 export const Menu = () => {
 
     const [menuStatus, setMenusStatus] = useState(false);
-    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : -(menu_size - 30))).current; // départ invisible
+    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : -(menu_size - 30))).current;
     const addPlayer = useStore((state: GameStore) => state.addPlayer);
     
     const deletePLayers = useStore((state: GameStore) => state.deletePLayers);
