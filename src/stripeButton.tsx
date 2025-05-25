@@ -10,6 +10,8 @@ type MyInputProps = {
 export const StripeButton = (props: MyInputProps) => {
 
     const [menuStatus, setMenusStatus] = useState(false);
+    // Hack to correctly apply transformation on startup.
+    const [layoutReady, setLayoutReady] = useState(false);
 
     const getContainerCssForStatus = () => {
         return menuStatus ? {} : {transform: [ { rotate: '180deg' }]};
@@ -18,6 +20,7 @@ export const StripeButton = (props: MyInputProps) => {
 
 
   return (
+    
     <TouchableWithoutFeedback
         hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
         onPress={() => {
@@ -26,7 +29,7 @@ export const StripeButton = (props: MyInputProps) => {
 
         }}
     >
-        <View>
+        <View onLayout={() => setLayoutReady(true)}>
             <View style={{...styles.lineContainer, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
