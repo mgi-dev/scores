@@ -1,6 +1,12 @@
+
+## 0.2.0
+### Added
+- Add operation selection.
+- Add initial and target score
+- Add comment pipeline
+
+
 ## 0.1.1
-
-
 ### Added
 - Add validation pipeline (EsLint, TS).
 
@@ -11,8 +17,8 @@
 
 - Fix Rule selection.
 
-## 0.1.0
 
+## 0.1.0
 ### Added
 
 - Barely working application.
