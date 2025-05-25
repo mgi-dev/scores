@@ -1,4 +1,15 @@
 
+## 0.3.0
+### Changed
+- Update readme.
+- Rename App
+
+### Added
+- Add license
+- Add Icons
+- Add app signin
+
+
 ## 0.2.3
 
 ### Changed
