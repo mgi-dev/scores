@@ -1,4 +1,11 @@
 
+## 0.2.1
+
+### Fixed
+- Fix Scroll beahaviour.
+- Fix Menu animation.
+
+
 ## 0.2.0
 ### Added
 - Add operation selection.
@@ -14,11 +21,9 @@
 - Implement zustand for state management.
 
 ### Fixed
-
 - Fix Rule selection.
 
 
 ## 0.1.0
 ### Added
-
 - Barely working application.
