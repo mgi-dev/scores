@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,8 +23,40 @@ jobs:
             exit 1
           fi
 
-      - name: Install deps
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
         run: npm install
-        
-      - name: Deploy
-        run: echo "Déploiement prod sur tag ${{ github.ref }}"
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+      
+      - name: Decode keystore file
+        run: |
+          echo "${{ secrets.SCORES_KEYSTORE }}" | base64 -d > android/app/keystore.jks
+
+      - name: Set up gradle.properties
+        run: |
+          echo "MYAPP_UPLOAD_STORE_FILE=keystore.jks" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_ALIAS=my-key-alias" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> android/gradle.properties
+
+      - name: Build signed APK
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: scores-${GITHUB_REF##*/}.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
