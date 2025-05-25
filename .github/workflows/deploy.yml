@@ -55,8 +55,8 @@ jobs:
         working-directory: android
         run: |
           # ./gradlew assembleRelease
-          echo "coucou" >> android/app/build/outputs/apk/release/app-release.apk
           echo ${{ github.ref_name }}
+          
           exit 1
 
       - name: Upload APK
