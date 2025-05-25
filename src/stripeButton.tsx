@@ -11,13 +11,15 @@ export const StripeButton = (props: MyInputProps) => {
 
     const [menuStatus, setMenusStatus] = useState(false);
 
+
     const getContainerCssForStatus = () => {
-        return menuStatus ? {} : {transform: [ { rotate: '180deg' }]};
+        return menuStatus ? {transform: [ { rotate: '180deg' }]} : {};
     };
 
 
 
   return (
+
     <TouchableWithoutFeedback
         hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
         onPress={() => {
@@ -26,14 +28,14 @@ export const StripeButton = (props: MyInputProps) => {
 
         }}
     >
-        <View style={{}}>
+        <View>
             <View style={{...styles.lineContainer, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
                 <View style={{...styles.middleLine, ...styles.rightMidleLine}} />
                 <View style={styles.line} />
             </View>
-            <View style={{...styles.lineContainer, ...{marginTop: -35}, ...getContainerCssForStatus()}}>
+            <View style={{...styles.lineContainer, ...{marginTop: -15}, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
                 <View style={{...styles.middleLine, ...styles.rightMidleLine}} />
@@ -46,7 +48,6 @@ export const StripeButton = (props: MyInputProps) => {
 
 
 const stripeScale = 0.5;
-// const stripeScale = 1.0
 
 const styles = StyleSheet.create({
   lineContainer: {
@@ -70,7 +71,6 @@ const styles = StyleSheet.create({
     marginTop: 20 * stripeScale,
     borderBottomWidth: 2,
     borderColor: '#000',
-    backgroundColor: '#EDEDED',
   },
   leftMidleLine: {
     transform: [ { rotate: '30deg' }],

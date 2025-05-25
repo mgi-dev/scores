@@ -13,9 +13,9 @@ export const constants = {
         DUMBAL: 'dumbal',
     },
     operations: {
-        ADD: "ADD",
-        SUB: "SUB"
-    }
+        ADD: 'ADD',
+        SUB: 'SUB',
+    },
 };
 
 

@@ -1,13 +1,13 @@
-import { constants } from "../constants";
+import { constants } from '../constants';
 
 
 export const updateScore = (score: number, difference: number, operation: string) : number => {
-    if (operation == constants.operations.ADD) {
-        return score + difference
+    if (operation === constants.operations.ADD) {
+        return score + difference;
     } else {
-        return score - difference
+        return score - difference;
     }
-}
+};
 
 
 export const hasWon = (selectedRule: string, score: number, targetScore: number, operation: string): boolean => {
@@ -28,17 +28,17 @@ export const hasWon = (selectedRule: string, score: number, targetScore: number,
 
 const defaultRule = (score: number, targetScore: number, operation: string): boolean => {
     if (operation == constants.operations.ADD) {
-        return score >= targetScore
+        return score >= targetScore;
     } else {
-        return score <= targetScore
+        return score <= targetScore;
     }
 };
 
 
 const dumbalRule = (score: number, targetScore: number, operation: string): boolean => {
     if (operation == constants.operations.ADD) {
-        return score >= targetScore
+        return score >= targetScore;
     } else {
-        return score <= targetScore
+        return score <= targetScore;
     }
 };

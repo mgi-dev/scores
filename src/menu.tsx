@@ -13,30 +13,30 @@ const menu_size = 350;
 export const Menu = () => {
 
     const [menuStatus, setMenusStatus] = useState(false);
-    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : -(menu_size - 30))).current; // départ invisible
+    const slideAnim = useRef(new Animated.Value(menuStatus ? 0 : -(menu_size - 30))).current;
     const addPlayer = useStore((state: GameStore) => state.addPlayer);
-    
+
     const deletePLayers = useStore((state: GameStore) => state.deletePLayers);
 
     const operation = useStore((state: GameStore) => state.operation);
     const updateOperation = useStore((state: GameStore) => state.updateOperation);
-    
+
 
     const initialScore = useStore((state: GameStore) => state.initialScore);
     const updateInitialScore = useStore((state: GameStore) => state.updateInitialScore);
-    
+
     const targetScore = useStore((state: GameStore) => state.targetScore);
     const updateTargetScore = useStore((state: GameStore) => state.updateTargetScore);
-    
-    
 
 
 
 
-    const toggleMenu = () => {
-        setMenusStatus(!menuStatus);
+
+
+    const toggleMenu = (newMenuStatus: boolean) => {
+        setMenusStatus(newMenuStatus);
         Animated.timing(slideAnim, {
-        toValue: menuStatus ? 0 : -(menu_size - 30),
+        toValue: newMenuStatus ? 0 : -(menu_size - 30),
         duration: 350,
         useNativeDriver: true,
         }).start();
@@ -72,7 +72,7 @@ export const Menu = () => {
         >
 
             <NewPlayerInput />
-            
+
             <TouchableOpacity
                 onPress={()=> {
                     deletePLayers();
@@ -100,7 +100,7 @@ export const Menu = () => {
         </View>
         <View style={styles.operationPickerContainer}>
             <Text>Initial score</Text>
-        
+
             <TextInput
                 style = {styles.inputStyle}
                 keyboardType="numeric"
