@@ -2,6 +2,19 @@
 
 A react-native application to keep track of scores during board games.
 
+It ain't pretty but it's workin' !
+
+
+<div style="display: flex; gap: 30px;">
+
+<img src="./screenshots/screenshotMenu.png" alt="Menu overview" width="200" />
+
+<img src="./screenshots/screenshotScores.png" alt="Score overview" width="200" />
+
+</div>
+
+<br/>
+<br/>
 
 # Running localy
 
