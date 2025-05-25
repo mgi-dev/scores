@@ -1,0 +1,31 @@
+name: Deploy on Tag
+
+on:
+  push:
+    tags:
+      - '*'   
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Validate tag
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+          if [[ $TAG_NAME =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Tag OK"
+          else
+            echo "Bad tag format"
+            exit 1
+          fi
+
+      - name: Install deps
+        run: npm install
+        
+      - name: Deploy
+        run: echo "Déploiement prod sur tag ${{ github.ref }}"
