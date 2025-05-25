@@ -33,10 +33,10 @@ export const Menu = () => {
 
 
 
-    const toggleMenu = () => {
-        setMenusStatus(!menuStatus);
+    const toggleMenu = (newMenuStatus: boolean) => {
+        setMenusStatus(newMenuStatus);
         Animated.timing(slideAnim, {
-        toValue: menuStatus ? 0 : -(menu_size - 30),
+        toValue: newMenuStatus ? 0 : -(menu_size - 30),
         duration: 350,
         useNativeDriver: true,
         }).start();

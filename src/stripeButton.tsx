@@ -14,7 +14,7 @@ export const StripeButton = (props: MyInputProps) => {
     const [layoutReady, setLayoutReady] = useState(false);
 
     const getContainerCssForStatus = () => {
-        return menuStatus ? {} : {transform: [ { rotate: '180deg' }]};
+        return menuStatus ? {transform: [ { rotate: '180deg' }]} : {};
     };
 
 
@@ -36,7 +36,7 @@ export const StripeButton = (props: MyInputProps) => {
                 <View style={{...styles.middleLine, ...styles.rightMidleLine}} />
                 <View style={styles.line} />
             </View>
-            <View style={{...styles.lineContainer, ...{marginTop: -35}, ...getContainerCssForStatus()}}>
+            <View style={{...styles.lineContainer, ...{marginTop: -15}, ...getContainerCssForStatus()}}>
                 <View style={styles.line} />
                 <View style={{...styles.middleLine, ...styles.leftMidleLine}} />
                 <View style={{...styles.middleLine, ...styles.rightMidleLine}} />
