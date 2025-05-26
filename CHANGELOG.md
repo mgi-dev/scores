@@ -1,7 +1,7 @@
-## 0.4.5
+## 0.4.6
 ### Added
 - Deployment pipeline
-
+- Add icons
 
 ## 0.3.3
 ### Changed

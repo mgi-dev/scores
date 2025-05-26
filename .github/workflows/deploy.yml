@@ -53,13 +53,16 @@ jobs:
 
       - name: Build signed APK
         working-directory: android
-        run: ./gradlew assembleRelease
-                
+        run: |
+          ./gradlew assembleRelease
+          mv android/app/build/outputs/apk/release/app-release.apk \
+          android/app/build/outputs/apk/release/Scores-${{ github.ref_name }}.apk
+                  
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          files: android/app/build/outputs/apk/release/scores-${{ github.ref_name }}.apk
+          files: android/app/build/outputs/apk/release/Scores-${{ github.ref_name }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
