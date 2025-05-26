@@ -61,11 +61,11 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
 
 const playerStyles = StyleSheet.create({
   mainContainer: {
-    margin: 10,
+    margin: constants.windowHeight * 0.02,
     borderWidth: 1,
     borderColor:'rgb(177, 183, 185)',
     borderRadius: 8,
-    paddingBottom:8,
+    paddingBottom: constants.windowHeight * 0.02,
     backgroundColor: '#f5f5f5',
   },
   scoreContainer: {
@@ -79,7 +79,7 @@ const playerStyles = StyleSheet.create({
     paddingLeft: 10,
   },
   scoreInput: {
-    width: 50,
+    width: constants.windowWidth * 0.20,
     borderColor: '#ccc',
     color: 'black',
     borderWidth: 1,

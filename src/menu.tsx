@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useStore, GameStore } from './services/store';
 import { constants } from './constants';
 
-const menu_size = 350;
+const menu_size = constants.windowHeight * 0.6;
 
 export const Menu = () => {
 
@@ -65,6 +65,7 @@ export const Menu = () => {
 
   return (
     <Animated.View style={{...styles.mainContainer, ...getContainerCss(), ...{ transform: [{ translateY: slideAnim }] }}}>
+        
         <View style={{...styles.menuContainer}}>
             {getDevContent()}
         </View>
@@ -156,30 +157,34 @@ const styles = StyleSheet.create({
 
     },
 
-operationPickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  operationPicker: {
-    height: 50,
-    width: 200,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    justifyContent: 'center',
-    color: 'black',
-  },
+    operationPickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: constants.windowWidth * 0.8,
+        marginTop: constants.windowHeight * 0.01,
+    },
+    operationPicker: {
+        height: 50,
+        width: 200,
+        backgroundColor: '#f5f5f5',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        justifyContent: 'center',
+        color: 'black',
+    },
     inputStyle: {
-    height: 50,
-    width: 100,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    fontSize: constants.mediumFont,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 16,
-  },
-});
+        height: 50,
+        width: 200,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 16,
+        fontSize: constants.mediumFont,
+        backgroundColor: '#f9f9f9',
+    },
+    });
+
+//<View style={{backgroundColor: 'red', height: 400, width: constants.windowWidth / 2, position: 'absolute'}}></View>
