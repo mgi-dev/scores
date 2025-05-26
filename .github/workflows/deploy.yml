@@ -55,8 +55,8 @@ jobs:
         working-directory: android
         run: |
           ./gradlew assembleRelease
-          mv android/app/build/outputs/apk/release/app-release.apk \
-          android/app/build/outputs/apk/release/Scores-${{ github.ref_name }}.apk
+          mv app/build/outputs/apk/release/app-release.apk \
+          app/build/outputs/apk/release/Scores-${{ github.ref_name }}.apk
                   
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
