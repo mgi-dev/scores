@@ -3,7 +3,6 @@ import {Animated, Text, TextInput, TouchableOpacity, View, StyleSheet} from 'rea
 import {Picker} from '@react-native-picker/picker';
 import { StripeButton } from './stripeButton';
 import {NewPlayerInput} from './newPlayerInput';
-import { RuleSelector } from './ruleSelector';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useStore, GameStore } from './services/store';
@@ -65,7 +64,7 @@ export const Menu = () => {
 
   return (
     <Animated.View style={{...styles.mainContainer, ...getContainerCss(), ...{ transform: [{ translateY: slideAnim }] }}}>
-        
+
         <View style={{...styles.menuContainer}}>
             {getDevContent()}
         </View>
@@ -84,7 +83,7 @@ export const Menu = () => {
             <Text>Reset</Text>
             </TouchableOpacity>
         </View>
-        
+
         <View style={styles.operationPickerContainer}>
             <Text>Operation</Text>
             <Picker

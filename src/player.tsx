@@ -10,12 +10,12 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
 
   const [addedScore, setAddedScore] = useState(0);
 
-  const updatePlayerScore= useStore((state: GameStore) => state.updatePlayerScore);
-  const resetPlayerScore= useStore((state: GameStore) => state.resetPlayerScore);
+  const updatePlayerScore = useStore((state: GameStore) => state.updatePlayerScore);
+  const resetPlayerScore = useStore((state: GameStore) => state.resetPlayerScore);
 
 
-  const handleSubmit = () => {    
-    updatePlayerScore(playerData, addedScore)
+  const handleSubmit = () => {
+    updatePlayerScore(playerData, addedScore);
     setAddedScore(0);
   };
 
@@ -44,7 +44,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
         <View style={{alignSelf: 'center'}}>
           <TouchableOpacity
             onPress={()=> {
-              resetPlayerScore(playerData)
+              resetPlayerScore(playerData);
               setAddedScore(0);
             }}
           >

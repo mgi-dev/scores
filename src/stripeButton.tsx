@@ -6,7 +6,7 @@ type MyInputProps = {
   onPress: (menuStatus: boolean) => void;
 };
 
-const touchableArea = constants.windowHeight * 0.05
+const touchableArea = constants.windowHeight * 0.05;
 
 export const StripeButton = (props: MyInputProps) => {
 
@@ -21,7 +21,7 @@ export const StripeButton = (props: MyInputProps) => {
 
     <TouchableWithoutFeedback
         hitSlop={{ top: touchableArea, bottom: touchableArea, left: touchableArea, right: touchableArea }}
-        
+
         onPress={() => {
             props.onPress(!menuStatus);
             setMenusStatus(!menuStatus);
@@ -49,7 +49,7 @@ export const StripeButton = (props: MyInputProps) => {
 
 const styles = StyleSheet.create({
   mainContainer:{
-    marginTop: constants.windowHeight * 0.10
+    marginTop: constants.windowHeight * 0.10,
   },
   lineContainer: {
     alignItems: 'center',

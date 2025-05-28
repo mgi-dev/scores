@@ -36,10 +36,10 @@ export const ScoreBoard = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    
+
   },
   playerListContainer: {
     paddingVertical: constants.windowHeight * 0.02,
     paddingBottom: constants.windowHeight * 0.40,
-  }
-})
+  },
+});
