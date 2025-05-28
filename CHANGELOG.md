@@ -1,3 +1,9 @@
+## 0.5.0
+### Added
+- Dynamic views dimensions
+- Remove dead fields
+
+
 ## 0.4.7
 ### Added
 - Deployment pipeline
