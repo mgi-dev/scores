@@ -6,6 +6,7 @@ type MyInputProps = {
   onPress: (menuStatus: boolean) => void;
 };
 
+const touchableArea = constants.windowHeight * 0.05
 
 export const StripeButton = (props: MyInputProps) => {
 
@@ -19,7 +20,7 @@ export const StripeButton = (props: MyInputProps) => {
   return (
 
     <TouchableWithoutFeedback
-        hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
+        hitSlop={{ top: touchableArea, bottom: touchableArea, left: touchableArea, right: touchableArea }}
         
         onPress={() => {
             props.onPress(!menuStatus);
