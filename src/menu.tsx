@@ -84,7 +84,7 @@ export const Menu = () => {
             <Text>Reset</Text>
             </TouchableOpacity>
         </View>
-        <RuleSelector/>
+        
         <View style={styles.operationPickerContainer}>
             <Text>Operation</Text>
             <Picker
