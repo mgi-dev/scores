@@ -1,10 +1,11 @@
 import React from 'react';
-import { ScrollView, Text, View} from 'react-native';
+import { ScrollView, Text, View, StyleSheet} from 'react-native';
 import {Player} from './player';
 
 import {Menu} from './menu';
 import { GameStore, useStore } from './services/store';
 import { PlayerData } from './services/interfaces';
+import { constants } from './constants';
 
 
 export const ScoreBoard = () => {
@@ -19,7 +20,7 @@ export const ScoreBoard = () => {
           <Text />
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ paddingVertical: 8 , paddingBottom: 200}}
+            contentContainerStyle={styles.playerListContainer}
           >
             {playersData.map((item: PlayerData) => (
               <View key={item.key} style={{ marginBottom: 12 }}>
@@ -30,3 +31,15 @@ export const ScoreBoard = () => {
         </View>
   );
 };
+
+
+
+const styles = StyleSheet.create({
+  mainContainer: {
+
+  },
+  playerListContainer: {
+    paddingVertical: constants.windowHeight * 0.02,
+    paddingBottom: constants.windowHeight * 0.40,
+  },
+});

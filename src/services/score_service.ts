@@ -27,7 +27,7 @@ export const hasWon = (selectedRule: string, score: number, targetScore: number,
 
 
 const defaultRule = (score: number, targetScore: number, operation: string): boolean => {
-    if (operation == constants.operations.ADD) {
+    if (operation === constants.operations.ADD) {
         return score >= targetScore;
     } else {
         return score <= targetScore;
@@ -36,7 +36,7 @@ const defaultRule = (score: number, targetScore: number, operation: string): boo
 
 
 const dumbalRule = (score: number, targetScore: number, operation: string): boolean => {
-    if (operation == constants.operations.ADD) {
+    if (operation === constants.operations.ADD) {
         return score >= targetScore;
     } else {
         return score <= targetScore;
