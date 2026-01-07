@@ -7,6 +7,8 @@ import { GameStore, useStore } from './services/store';
 import { PlayerData } from './services/interfaces';
 import { constants } from './constants';
 import { NewPlayerInputV2 } from './NewPlayerInputV2';
+import { NewPlayerInputV3 } from './NewPlayerInputV3';
+import { DeletePlayersButton } from './DeletePlayersButton';
 
 
 export const ScoreBoard = () => {
@@ -28,7 +30,9 @@ export const ScoreBoard = () => {
                 <Player playerData={item} />
               </View>
             ))}
+          <DeletePlayersButton/>
           <NewPlayerInputV2/>
+          <NewPlayerInputV3/>
           </ScrollView>
         </View>
   );

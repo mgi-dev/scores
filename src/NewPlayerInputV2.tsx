@@ -41,6 +41,7 @@ export const NewPlayerInputV2 = () => {
 const playerStyles = StyleSheet.create({
     mainContainer: {
         width: 150,
+        margin: constants.windowHeight * 0.02,  
     },
     playerName: {
         fontSize: constants.bigFont,
