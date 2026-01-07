@@ -6,6 +6,7 @@ import {Menu} from './menu';
 import { GameStore, useStore } from './services/store';
 import { PlayerData } from './services/interfaces';
 import { constants } from './constants';
+import { NewPlayerInputV2 } from './NewPlayerInputV2';
 
 
 export const ScoreBoard = () => {
@@ -27,6 +28,7 @@ export const ScoreBoard = () => {
                 <Player playerData={item} />
               </View>
             ))}
+          <NewPlayerInputV2/>
           </ScrollView>
         </View>
   );
