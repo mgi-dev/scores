@@ -1,36 +1,23 @@
-import React, { useState, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  Easing,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { constants } from './constants';
-import { useStore } from './services/store';
+import {constants} from './constants';
+import {useStore} from './services/store';
 
 export const NewPlayerInputV3 = () => {
   const [showInput, setShowInput] = useState(false);
   const [name, setName] = useState('');
   const addPlayer = useStore((state: any) => state.addPlayer);
   const morphAnim = useRef(new Animated.Value(0)).current; // 0: icon, 1: input
-  
+
   const animationDuration = 900;
-
-// Need to do the aniùmation in two steps.
-  const animateToLargeIcon = () => {
-    Animated.timing(morphAnim, {
-      toValue: 1,
-      duration: animationDuration,
-      useNativeDriver: true,
-      easing: Easing.out(Easing.ease),
-    }).start();
-  };
-
-  const animateToSmallIcon = () => {
-    Animated.timing(morphAnim, {
-      toValue: 0,
-      duration: animationDuration,
-      useNativeDriver: true,
-      easing: Easing.out(Easing.ease),
-    }).start();
-  };
-
 
   const animateToInput = () => {
     Animated.timing(morphAnim, {
@@ -44,7 +31,7 @@ export const NewPlayerInputV3 = () => {
   const animateToIcon = () => {
     Animated.timing(morphAnim, {
       toValue: 0,
-      duration: animationDuration,
+      duration: animationDuration / 2,
       useNativeDriver: true,
       easing: Easing.out(Easing.ease),
     }).start(() => setShowInput(false));
@@ -61,52 +48,61 @@ export const NewPlayerInputV3 = () => {
     animateToIcon();
   };
 
-  // Interpolate values for morphing effect
-  const iconScale = morphAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 0.7] });
-  const iconOpacity = morphAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [1, 0.2, 0] });
-  const inputScale = morphAnim.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] });
-  const inputOpacity = morphAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, 0.2, 1] });
-  // this is broken, width not supported , see https://reactnative.dev/docs/transforms instead
-  const iconWidth = morphAnim.interpolate({ inputRange: [0, 1], outputRange: [constants.windowWidth * 0.12, constants.windowHeight * 0.40] });
+  const iconOpacity = morphAnim.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [1, 0.2, 0],
+  });
+  const inputScale = morphAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.7, 1],
+  });
+  const inputOpacity = morphAnim.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 0.2, 1],
+  });
+  const iconWidth = morphAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 7],
+  });
 
-  return (
-    <View style={styles.container}>
+  const renderAddPlayerIconButton = () => {
+    return (
       <Animated.View
+        // Style is not final, but easier to work with in jsx.
         style={{
           position: 'absolute',
           opacity: iconOpacity,
-          transform: [{ scale: iconScale }],
-        width: '100%',
-        //   marginLeft:'35%',
-        //   marginRight:'35%',
-        //   borderColor: 'red',
-          borderWidth:1,
+          width: '100%',
+          borderWidth: 1,
           alignItems: 'center',
         }}
-        pointerEvents={showInput ? 'none' : 'auto'}
-      >
-        <TouchableOpacity onPress={handleAddIconPress} style={{
+        pointerEvents={showInput ? 'none' : 'auto'}>
+        <TouchableOpacity
+          onPress={handleAddIconPress}
+          style={{
             backgroundColor: '#e0e0e0',
             borderRadius: 24,
-            // width: '12%',
-            width: iconWidth,
             padding: 8,
             alignItems: 'center',
             justifyContent: 'center',
-            
-        }}>
+            transform: [{scaleX: iconWidth}],
+          }}>
           <Icon name="person-add" size={32} color="#333" />
         </TouchableOpacity>
       </Animated.View>
+    );
+  };
+
+  const renderNameInput = () => {
+    return (
       <Animated.View
         style={{
           opacity: inputOpacity,
-          transform: [{ scale: inputScale }],
+          transform: [{scale: inputScale}],
           width: '100%',
           alignItems: 'center',
         }}
-        pointerEvents={showInput ? 'auto' : 'none'}
-      >
+        pointerEvents={showInput ? 'auto' : 'none'}>
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
@@ -115,11 +111,20 @@ export const NewPlayerInputV3 = () => {
             placeholder="Nom du joueur"
             autoFocus={showInput}
           />
-          <TouchableOpacity onPress={handleValidate} style={styles.validateButton}>
+          <TouchableOpacity
+            onPress={handleValidate}
+            style={styles.validateButton}>
             <Icon name="check" size={28} color="#fff" />
           </TouchableOpacity>
         </View>
       </Animated.View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderAddPlayerIconButton()}
+      {renderNameInput()}
     </View>
   );
 };
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 12,
   },
-  
+
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -152,6 +157,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
-
