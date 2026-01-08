@@ -22,6 +22,7 @@ export interface GameStore {
     playersData: PlayerData[];
     addPlayer: (playerName: string) => void;
     deletePLayers: () => void;
+    deletePlayer: (playerData: PlayerData) => void;
     updatePlayerScore: (playerData: PlayerData, addedScore: number) => void
     resetPlayerScore: (playerData: PlayerData) => void
 
@@ -59,6 +60,11 @@ export const useStore = create<GameStore>((set, get: any) => ({
         set({playersData: [...get().playersData, newPlayerData]});
     },
     deletePLayers: () => set({playersData: []}),
+
+    deletePlayer: (playerData: PlayerData) => {
+        set({playersData: get().playersData.filter((o: PlayerData) => o.key != playerData.key)
+        })
+    },
 
     updatePlayerScore: (newPlayerData: PlayerData, addedScore: number) => {
         // it's mutating but it's working.

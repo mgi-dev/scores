@@ -2,7 +2,6 @@ import React, {useState, useRef} from 'react';
 import {
   Text,
   TextInput,
-  TouchableOpacity,
   View,
   StyleSheet,
   Animated,
@@ -11,9 +10,7 @@ import {
 import {constants} from './constants';
 import {useStore, GameStore} from './services/store';
 import {PlayerData} from './services/interfaces';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {DeleteIcon} from './component/icon/DeleteIcon';
-import {EditIcon} from './component/icon/InsertIcon';
 import {ResetIcon} from './component/icon/ResetIcon';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
@@ -27,6 +24,8 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
   const resetPlayerScore = useStore(
     (state: GameStore) => state.resetPlayerScore,
   );
+
+  const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
 
   // --- Swipe UI ---
   const slideX = useRef(new Animated.Value(0)).current;
@@ -63,7 +62,6 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
     setAddedScore(0);
   };
 
-
   return (
     <View style={{margin: constants.windowHeight * 0.02}}>
       {/* Action buttons behind */}
@@ -75,6 +73,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
           }}
         />
         <DeleteIcon
+          onPress={() => deletePlayer(playerData)}
           style={{
             borderBottomRightRadius: playerWidgetBorderRadius,
             borderTopRightRadius: playerWidgetBorderRadius,
