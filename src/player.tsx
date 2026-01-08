@@ -1,26 +1,40 @@
 import React, {useState, useRef} from 'react';
-import {Text, TextInput, TouchableOpacity, View, StyleSheet, Animated, PanResponder} from 'react-native';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Animated,
+  PanResponder,
+} from 'react-native';
 import {constants} from './constants';
-import { useStore, GameStore } from './services/store';
-import { PlayerData } from './services/interfaces';
+import {useStore, GameStore} from './services/store';
+import {PlayerData} from './services/interfaces';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {DeleteIcon} from './component/icon/DeleteIcon';
+import {EditIcon} from './component/icon/InsertIcon';
+import {ResetIcon} from './component/icon/ResetIcon';
 
-
-const playerWidgetBorderRadius = 8 // to smooth the edges of player widget.
+const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 
 export const Player = ({playerData}: {playerData: PlayerData}) => {
-
   const [addedScore, setAddedScore] = useState(0);
 
-  const updatePlayerScore = useStore((state: GameStore) => state.updatePlayerScore);
-  const resetPlayerScore = useStore((state: GameStore) => state.resetPlayerScore);
+  const updatePlayerScore = useStore(
+    (state: GameStore) => state.updatePlayerScore,
+  );
+  const resetPlayerScore = useStore(
+    (state: GameStore) => state.resetPlayerScore,
+  );
 
   // --- Swipe UI ---
   const slideX = useRef(new Animated.Value(0)).current;
   const actionWidth = 120; // width for the action buttons
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dx) > 10,
+      onMoveShouldSetPanResponder: (_, gestureState) =>
+        Math.abs(gestureState.dx) > 10,
       onPanResponderMove: (_, gestureState) => {
         if (gestureState.dx < 0) {
           slideX.setValue(Math.max(gestureState.dx, -actionWidth));
@@ -39,7 +53,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
           }).start();
         }
       },
-    })
+    }),
   ).current;
 
   // --- End Swipe UI ---
@@ -49,58 +63,73 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
     setAddedScore(0);
   };
 
+  const renderResetIcon = () => {
+    return (
+      <View style={{alignSelf: 'center'}}>
+        <TouchableOpacity
+          onPress={() => {
+            resetPlayerScore(playerData);
+            setAddedScore(0);
+          }}>
+          <Icon name="refresh" size={30} color="#000" />
+          <Text>Reset</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
-    <View style={{margin: constants.windowHeight * 0.02,}}>
+    <View style={{margin: constants.windowHeight * 0.02}}>
       {/* Action buttons behind */}
       <View style={playerStyles.actionContainer}>
-        <TouchableOpacity style={[playerStyles.actionButton, {backgroundColor: '#1976d2'}]}>
-          <Icon name="edit" size={24} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={[
-          playerStyles.actionButton, {
-          backgroundColor: '#e53935', 
-          borderBottomRightRadius: playerWidgetBorderRadius,
-          borderTopRightRadius: playerWidgetBorderRadius
-          }]}>
-          <Icon name="delete" size={24} color="#fff" />
-        </TouchableOpacity>
+        <EditIcon />
+        <DeleteIcon
+          style={{
+            borderBottomRightRadius: playerWidgetBorderRadius,
+            borderTopRightRadius: playerWidgetBorderRadius,
+          }}
+        />
       </View>
       {/* Main player card slides over */}
       <Animated.View
         style={{
           transform: [{translateX: slideX}],
         }}
-        {...panResponder.panHandlers}
-      >
+        {...panResponder.panHandlers}>
         <View style={playerStyles.mainContainer}>
           <Text
-            style={{...playerStyles.playerName, color: playerData.hasWon ? 'green' : 'black'}}
-          >{playerData.name}</Text>
+            style={{
+              ...playerStyles.playerName,
+              color: playerData.hasWon ? 'green' : 'black',
+            }}>
+            {playerData.name}
+          </Text>
           <View style={playerStyles.scoreContainer}>
-            <Text style = {{...playerStyles.score, color: playerData.hasWon ? 'green' : 'black'}}>{playerData.score}</Text>
+            <Text
+              style={{
+                ...playerStyles.score,
+                color: playerData.hasWon ? 'green' : 'black',
+              }}>
+              {playerData.score}
+            </Text>
 
             <TextInput
-              style = {playerStyles.scoreInput}
+              style={playerStyles.scoreInput}
               keyboardType="numeric"
-              onChangeText={(text) => {
-                  setAddedScore(Number(text));
+              onChangeText={text => {
+                setAddedScore(Number(text));
               }}
               onSubmitEditing={handleSubmit}
               value={addedScore !== 0 ? String(addedScore) : ''}
             />
 
-            <View style={{alignSelf: 'center'}}>
-              <TouchableOpacity
-                onPress={()=> {
-                  resetPlayerScore(playerData);
-                  setAddedScore(0);
-                }}
-              >
-                <Icon name="refresh" size={30} color="#000" />
-                <Text>Reset</Text>
-              </TouchableOpacity>
-            </View>
+            {/* {renderResetIcon()} */}
+            <ResetIcon
+              onPress={() => {
+                resetPlayerScore(playerData);
+                setAddedScore(0);
+              }}
+            />
           </View>
         </View>
       </Animated.View>
@@ -108,13 +137,11 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
   );
 };
 
-
-
 const playerStyles = StyleSheet.create({
   mainContainer: {
     // margin: constants.windowHeight * 0.02,
     borderWidth: 1,
-    borderColor:'rgb(177, 183, 185)',
+    borderColor: 'rgb(177, 183, 185)',
     borderRadius: playerWidgetBorderRadius,
     paddingBottom: constants.windowHeight * 0.02,
     backgroundColor: '#f5f5f5',
@@ -123,14 +150,13 @@ const playerStyles = StyleSheet.create({
     flexDirection: 'row',
     width: constants.windowWidth,
     justifyContent: 'space-evenly',
-
   },
   playerName: {
     fontSize: constants.littleFont,
     paddingLeft: 10,
   },
   scoreInput: {
-    width: constants.windowWidth * 0.20,
+    width: constants.windowWidth * 0.2,
     borderColor: '#ccc',
     color: 'black',
     borderWidth: 1,
