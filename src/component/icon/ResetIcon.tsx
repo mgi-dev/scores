@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, ViewStyle, View, Text} from 'react-native';
+import {TouchableOpacity, StyleSheet, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface EditIconProps {
@@ -10,12 +10,9 @@ interface EditIconProps {
 
 export const ResetIcon = ({ style, iconStyle, onPress }: EditIconProps) => {
   return (
-    <View style={{alignSelf: 'center'}}>
-      <TouchableOpacity onPress={onPress}>
-        <Icon style={iconStyle} name="refresh" size={30} color="#000" />
-        <Text>Reset</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={[styles.actionButton, style]} onPress={onPress}>
+      <Icon style={iconStyle} name="refresh" size={24} color="#fff" />
+    </TouchableOpacity>
   );
 };
 

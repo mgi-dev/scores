@@ -63,26 +63,17 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
     setAddedScore(0);
   };
 
-  const renderResetIcon = () => {
-    return (
-      <View style={{alignSelf: 'center'}}>
-        <TouchableOpacity
-          onPress={() => {
-            resetPlayerScore(playerData);
-            setAddedScore(0);
-          }}>
-          <Icon name="refresh" size={30} color="#000" />
-          <Text>Reset</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
 
   return (
     <View style={{margin: constants.windowHeight * 0.02}}>
       {/* Action buttons behind */}
       <View style={playerStyles.actionContainer}>
-        <EditIcon />
+        <ResetIcon
+          onPress={() => {
+            resetPlayerScore(playerData);
+            setAddedScore(0);
+          }}
+        />
         <DeleteIcon
           style={{
             borderBottomRightRadius: playerWidgetBorderRadius,
@@ -121,14 +112,6 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
               }}
               onSubmitEditing={handleSubmit}
               value={addedScore !== 0 ? String(addedScore) : ''}
-            />
-
-            {/* {renderResetIcon()} */}
-            <ResetIcon
-              onPress={() => {
-                resetPlayerScore(playerData);
-                setAddedScore(0);
-              }}
             />
           </View>
         </View>
