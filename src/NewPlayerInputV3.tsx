@@ -73,7 +73,6 @@ export const NewPlayerInputV3 = () => {
           position: 'absolute',
           opacity: iconOpacity,
           width: '100%',
-          borderWidth: 1,
           alignItems: 'center',
         }}
         pointerEvents={showInput ? 'none' : 'auto'}>
