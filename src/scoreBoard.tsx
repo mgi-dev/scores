@@ -29,8 +29,8 @@ export const ScoreBoard = () => {
                 <Player playerData={item} />
               </View>
             ))}
-          <DeletePlayersButton/>
-          <NewPlayerInputV3/>
+            <DeletePlayersButton/>
+            <NewPlayerInputV3/>
           </ScrollView>
         </View>
   );

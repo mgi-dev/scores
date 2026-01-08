@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
         zIndex:2,
         opacity: 1.0,
         height: menu_size,
+        marginTop:'5%',  // fix for notch. Temporary
         justifyContent: 'space-between',
 
     },
