@@ -9,6 +9,7 @@ import {constants} from './constants';
 import {NewPlayerInputV3} from './NewPlayerInputV3';
 import {DeletePlayersButton} from './DeletePlayersButton';
 import {AddDebugPlayersButton} from './AddDebugPlayersButton';
+import { Flip } from './component/Flip';
 
 export const ScoreBoard = () => {
   const playersData = useStore((state: GameStore) => state.playersData);
@@ -29,7 +30,7 @@ export const ScoreBoard = () => {
       <Menu />
       <Text />
       <Text />
-      <ScrollView
+      {/* <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.playerListContainer}>
         {playersData.map((item: PlayerData) => (
@@ -39,7 +40,8 @@ export const ScoreBoard = () => {
         ))}
         {getDevContent()}
         <NewPlayerInputV3 />
-      </ScrollView>
+      </ScrollView> */}
+        <Flip/>
     </View>
   );
 };
