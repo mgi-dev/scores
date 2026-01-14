@@ -20,9 +20,14 @@ export const Flip = () => {
   // Listen to flipAnim changes and update the ref
   useEffect(() => {
     const id = flipAnim.addListener(({ value }) => {
+      // Even gemini could not do such a masterpiece.
       if (value < 0.5){
         setIsFlipped(false)
-      }else 
+      } else if (0.5 < value && value <= 1){
+        setIsFlipped(true)
+      } else if (value > 1.5  && value <= 2){
+        setIsFlipped(false)
+      } else 
         setIsFlipped(true)
     });
     return () => flipAnim.removeListener(id);
@@ -35,30 +40,28 @@ export const Flip = () => {
       duration: 400,
       useNativeDriver: false,
     }).start(() => {
-      setIsFlipped(true);
       console.log('fliping');
     });
   };
 
   const flipToFront = () => {
     Animated.timing(flipAnim, {
-      toValue: 0,
+      toValue: 2,
       duration: 400,
       useNativeDriver: false,
     }).start(() => {
-      setIsFlipped(false);
-      console.log('counter fliping');
+      flipAnim.setValue(0)
+      console.log('fliping again');
     });
   };
 
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) =>
-        Math.abs(gestureState.dy) > 20,
+        gestureState.dy < -20,
       onPanResponderRelease: (_, gestureState) => {
         flipAnim.stopAnimation((currentValue: number) => {
-          console.log(isFlipped);
-          if (currentValue < 0.5) {
+          if (currentValue < 1) {
             flipToBack();
           } else {
             flipToFront();
@@ -69,23 +72,8 @@ export const Flip = () => {
   ).current;
 
   const rotateX = flipAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
-  });
-
-  const counterRotateX = flipAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['180deg', '0deg'],
-  });
-
-  const frontOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [1, 0.3, 0],
-  });
-
-  const backOpacity = flipAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
+    inputRange: [0, 1, 2],
+    outputRange: ['0deg', '360deg', '720deg'],
   });
 
 
@@ -95,26 +83,11 @@ export const Flip = () => {
         style={[
           styles.card,
           {
-            backgroundColor: '#f53',
-            opacity: frontOpacity,
+            backgroundColor: isFlipped ? 'green' : 'orange',
             transform: [{rotateX}],
             position: 'absolute',
           },
         ]}
-        {...panResponder.panHandlers}>
-        <Text style={styles.text}>{isFlipped ? "yes": "false"}</Text>
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.card,
-          {
-            backgroundColor: 'green',
-            opacity: backOpacity,
-            transform: [{rotateX: counterRotateX}],
-            position: 'absolute',
-          },
-        ]}
-        pointerEvents={isFlipped ? 'auto' : 'none'}
         {...panResponder.panHandlers}>
         <Text style={styles.text}>{isFlipped ? "yes": "false"}</Text>
       </Animated.View>
