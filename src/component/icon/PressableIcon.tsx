@@ -14,7 +14,7 @@ interface EditIconProps {
 export const PressableIcon = ({ name, style, iconStyle, onPress }: EditIconProps) => {
   return (
     <TouchableOpacity style={[styles.actionButton, style]} onPress={onPress}>
-      <EvilIcons style={iconStyle} name={name} size={24}/>
+      <EvilIcons style={iconStyle} name={name} size={64}/>
     </TouchableOpacity>
   );
 };

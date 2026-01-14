@@ -1,20 +1,17 @@
 import React from 'react';
 import {ScrollView, Text, View, StyleSheet, Button} from 'react-native';
-import {Player} from './player';
 
-import {Menu} from './menu';
 import {GameStore, useStore} from './services/store';
 import {PlayerData} from './services/interfaces';
 import {constants} from './constants';
 import {NewPlayerInputV3} from './NewPlayerInputV3';
 import {DeletePlayersButton} from './DeletePlayersButton';
 import {AddDebugPlayersButton} from './AddDebugPlayersButton';
-import {Flip} from './component/Flip';
-import { PressableIcon } from './component/icon/PressableIcon';
+import {PlayerFlipWidget} from './component/PlayerFlipWidget';
+import {PressableIcon} from './component/icon/PressableIcon';
 // import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
-
-const SCROLL_STEP_SIZE = constants.windowHeight * 0.33
+const SCROLL_STEP_SIZE = constants.windowHeight * 0.33;
 
 export const ScoreBoard = () => {
   const playersData = useStore((state: GameStore) => state.playersData);
@@ -23,45 +20,52 @@ export const ScoreBoard = () => {
   const playerListContentHeigth = React.useRef(0);
 
   const scrollDown = () => {
-    
-    console.log(probableScrollPosition.current , '/', playerListContentHeigth.current)
-    
+    console.log(
+      probableScrollPosition.current,
+      '/',
+      playerListContentHeigth.current,
+    );
+
     // Need to prevent user from scrolling too far. doesn't work yet.
-    if (probableScrollPosition.current + SCROLL_STEP_SIZE < playerListContentHeigth.current){
-      probableScrollPosition.current += SCROLL_STEP_SIZE
-      scrollRef.current?.scrollTo({y: probableScrollPosition.current, animated: true});
-    }else{
-      probableScrollPosition.current = playerListContentHeigth.current
+    if (
+      probableScrollPosition.current + SCROLL_STEP_SIZE <
+      playerListContentHeigth.current
+    ) {
+      probableScrollPosition.current += SCROLL_STEP_SIZE;
+      scrollRef.current?.scrollTo({
+        y: probableScrollPosition.current,
+        animated: true,
+      });
+    } else {
+      probableScrollPosition.current = playerListContentHeigth.current;
       scrollRef.current?.scrollToEnd({animated: true});
     }
-  }
+  };
 
   const scrollUp = () => {
-    console.log(probableScrollPosition.current)
-    if (probableScrollPosition.current > 0){
-      probableScrollPosition.current -= SCROLL_STEP_SIZE
+    console.log(probableScrollPosition.current);
+    if (probableScrollPosition.current > 0) {
+      probableScrollPosition.current -= SCROLL_STEP_SIZE;
     } else {
-      probableScrollPosition.current = 0
+      probableScrollPosition.current = 0;
     }
 
-    scrollRef.current?.scrollTo({y: probableScrollPosition.current, animated: true});
-  }
+    scrollRef.current?.scrollTo({
+      y: probableScrollPosition.current,
+      animated: true,
+    });
+  };
 
   const getScrollUpIcon = () => {
     return playersData.length > 4 ? (
-      <PressableIcon name='chevron-up' onPress={scrollUp}/>
-    ) : (
-      null
-    );
+      <PressableIcon name="chevron-up" onPress={scrollUp} />
+    ) : null;
   };
-
 
   const getScrollDownIcon = () => {
     return playersData.length > 4 ? (
-      <PressableIcon name='chevron-down' onPress={scrollDown}/>
-    ) : (
-      null
-    );
+      <PressableIcon name="chevron-down" onPress={scrollDown} />
+    ) : null;
   };
 
   const getDevContent = () => {
@@ -76,41 +80,40 @@ export const ScoreBoard = () => {
   };
 
   return (
-    <View style={{borderColor:'dark', borderWidth:1}}>
+    <View style={styles.mainContainer}>
       {getScrollUpIcon()}
-      
-      <Text />
-      <Text />
-      
-      
-      <View style={{height: '60%'}}>
+      <View style={{height: '80%'}}>
         <ScrollView
           ref={scrollRef}
           scrollEnabled={false}
-            onContentSizeChange={(_, height) => {
+          onContentSizeChange={(_, height) => {
             playerListContentHeigth.current = height;
           }}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.playerListContainer}>
           {playersData.map((item: PlayerData) => (
             <View key={item.key} style={{marginBottom: 12}}>
-              <Player playerData={item} />
+              <PlayerFlipWidget playerData={item} />
             </View>
           ))}
           {getDevContent()}
           <NewPlayerInputV3 />
         </ScrollView>
       </View>
-      <Flip />
       {getScrollDownIcon()}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {},
+  mainContainer: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    height: constants.windowHeight * 0.88,
+    width: constants.windowWidth * 0.94,
+    alignSelf: 'center',
+  },
   playerListContainer: {
-    paddingVertical: constants.windowHeight * 0.02,
-    paddingBottom: constants.windowHeight * 0.4,
+    
   },
 });

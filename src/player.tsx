@@ -12,15 +12,19 @@ import {useStore, GameStore} from './services/store';
 import {PlayerData} from './services/interfaces';
 import {DeleteIcon} from './component/icon/DeleteIcon';
 import {ResetIcon} from './component/icon/ResetIcon';
+import { updateScore } from './services/score_service';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 
-export const Player = ({playerData}: {playerData: PlayerData}) => {
+  export const Player = ({playerData, operation}: {playerData: PlayerData, operation: string}) => {
   const [addedScore, setAddedScore] = useState(0);
+  
+  //broke everything.
 
-  const updatePlayerScore = useStore(
-    (state: GameStore) => state.updatePlayerScore,
-  );
+
+  // const updatePlayerScore = useStore(
+  //   (state: GameStore) => state.updatePlayerScore,
+  // );
   const resetPlayerScore = useStore(
     (state: GameStore) => state.resetPlayerScore,
   );
@@ -58,7 +62,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
   // --- End Swipe UI ---
 
   const handleSubmit = () => {
-    updatePlayerScore(playerData, addedScore);
+    updateScore(playerData.score, addedScore, operation);
     setAddedScore(0);
   };
 
@@ -86,7 +90,7 @@ export const Player = ({playerData}: {playerData: PlayerData}) => {
           transform: [{translateX: slideX}],
         }}
         {...panResponder.panHandlers}>
-        <View style={playerStyles.mainContainer}>
+        <View style={[playerStyles.mainContainer, {backgroundColor: operation === 'add' ? '#f5f5f5': '#E1BBBB'}]}>
           <Text
             style={{
               ...playerStyles.playerName,
