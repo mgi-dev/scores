@@ -4,10 +4,23 @@ import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
 import { constants } from '../constants';
 
-const CARD_WIDTH = Dimensions.get('window').width * 0.8;
-const CARD_HEIGHT = 120;
+
+/**
+ * An interactive card component that rotates 360 degrees on swipe up gestures
+ * Only handle swippe logic and contains Player component.
+ * Pass to the player the operaton to use based on flip state.
+ * 
+ * @param {PlayerData} props.playerData - The player data to display on the card
+ * @returns {JSX.Element} An animated View component with rotation transform
+ *
+ * @example
+ * const playerData = { name: 'John', score: 100 };
+ * <PlayerFlipWidget playerData={playerData} />
+ */
 
 export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
+
+
   const flipAnim = useRef(new Animated.Value(0)).current;
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -63,6 +76,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   ).current;
 
   const rotateX = flipAnim.interpolate({
+    // too many rotation. will find anoother way.
     inputRange: [0, 1, 2],
     outputRange: ['0deg', '360deg', '720deg'],
   });
@@ -78,8 +92,8 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       <Player
         playerData={props.playerData}
         operation={
-          isFlipped ? constants.operations.ADD : constants.operations.SUB
-        }
+        isFlipped ? constants.operations.ADD : constants.operations.SUB
+          }
       />
     </Animated.View>
   );
