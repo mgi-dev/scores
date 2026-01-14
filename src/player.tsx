@@ -18,20 +18,18 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 
   export const Player = ({playerData, operation}: {playerData: PlayerData, operation: string}) => {
   const [addedScore, setAddedScore] = useState(0);
+  const [score, setScore] = useState(0);
   
-  //broke everything.
+  const resetPlayerScore = () => {
+    setScore(0)
+  }
 
-
-  // const updatePlayerScore = useStore(
-  //   (state: GameStore) => state.updatePlayerScore,
-  // );
-  const resetPlayerScore = useStore(
-    (state: GameStore) => state.resetPlayerScore,
-  );
+// Data is partially in store. A decision must be made.
+// Get rid of the store or do everything in it even for nothing ?
 
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
 
-  // --- Swipe UI ---
+
   const slideX = useRef(new Animated.Value(0)).current;
   const actionWidth = 120; // width for the action buttons
   const panResponder = useRef(
@@ -59,10 +57,10 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
     }),
   ).current;
 
-  // --- End Swipe UI ---
-
+  
   const handleSubmit = () => {
-    updateScore(playerData.score, addedScore, operation);
+    // this doesn't make any sense.
+    setScore(updateScore(score, addedScore, operation))
     setAddedScore(0);
   };
 
@@ -72,7 +70,7 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
       <View style={playerStyles.actionContainer}>
         <ResetIcon
           onPress={() => {
-            resetPlayerScore(playerData);
+            resetPlayerScore();
             setAddedScore(0);
           }}
         />
@@ -90,7 +88,9 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
           transform: [{translateX: slideX}],
         }}
         {...panResponder.panHandlers}>
-        <View style={[playerStyles.mainContainer, {backgroundColor: operation === 'add' ? '#f5f5f5': '#E1BBBB'}]}>
+        <View style={[playerStyles.mainContainer, {
+          backgroundColor: operation === constants.operations.ADD ? '#f5f5f5': '#E1BBBB'
+          }]}>
           <Text
             style={{
               ...playerStyles.playerName,
@@ -104,7 +104,7 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
                 ...playerStyles.score,
                 color: playerData.hasWon ? 'green' : 'black',
               }}>
-              {playerData.score}
+              {score}
             </Text>
 
             <TextInput

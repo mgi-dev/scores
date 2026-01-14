@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Animated, PanResponder, Dimensions} from 'react-native';
 import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
+import { constants } from '../constants';
 
 const CARD_WIDTH = Dimensions.get('window').width * 0.8;
 const CARD_HEIGHT = 120;
@@ -76,7 +77,9 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       {...panResponder.panHandlers}>
       <Player
         playerData={props.playerData}
-        operation={isFlipped ? 'add' : 'sub'}
+        operation={
+          isFlipped ? constants.operations.ADD : constants.operations.SUB
+        }
       />
     </Animated.View>
   );
