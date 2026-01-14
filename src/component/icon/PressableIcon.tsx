@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, ViewStyle} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 interface EditIconProps {
   name: string;
@@ -14,7 +14,7 @@ interface EditIconProps {
 export const PressableIcon = ({ name, style, iconStyle, onPress }: EditIconProps) => {
   return (
     <TouchableOpacity style={[styles.actionButton, style]} onPress={onPress}>
-      <Icon style={iconStyle} name={name} size={24}/>
+      <EvilIcons style={iconStyle} name={name} size={24}/>
     </TouchableOpacity>
   );
 };

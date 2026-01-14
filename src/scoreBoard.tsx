@@ -26,7 +26,7 @@ export const ScoreBoard = () => {
     
     console.log(probableScrollPosition.current , '/', playerListContentHeigth.current)
     
-    // don't get it. Need sleep.
+    // Need to prevent user from scrolling too far. doesn't work yet.
     if (probableScrollPosition.current + SCROLL_STEP_SIZE < playerListContentHeigth.current){
       probableScrollPosition.current += SCROLL_STEP_SIZE
       scrollRef.current?.scrollTo({y: probableScrollPosition.current, animated: true});
@@ -49,7 +49,7 @@ export const ScoreBoard = () => {
 
   const getScrollUpIcon = () => {
     return playersData.length > 4 ? (
-      <PressableIcon name='toto' onPress={scrollUp}/>
+      <PressableIcon name='chevron-up' onPress={scrollUp}/>
     ) : (
       null
     );
@@ -58,7 +58,7 @@ export const ScoreBoard = () => {
 
   const getScrollDownIcon = () => {
     return playersData.length > 4 ? (
-      <PressableIcon name='toto' onPress={scrollDown}/>
+      <PressableIcon name='chevron-down' onPress={scrollDown}/>
     ) : (
       null
     );
