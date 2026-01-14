@@ -12,23 +12,28 @@ import {useStore, GameStore} from './services/store';
 import {PlayerData} from './services/interfaces';
 import {DeleteIcon} from './component/icon/DeleteIcon';
 import {ResetIcon} from './component/icon/ResetIcon';
-import { updateScore } from './services/score_service';
+import {updateScore} from './services/score_service';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 
-  export const Player = ({playerData, operation}: {playerData: PlayerData, operation: string}) => {
+export const Player = ({
+  playerData,
+  operation,
+}: {
+  playerData: PlayerData;
+  operation: string; // impact style and calculus behaviour
+}) => {
   const [addedScore, setAddedScore] = useState(0);
   const [score, setScore] = useState(0);
-  
-  const resetPlayerScore = () => {
-    setScore(0)
-  }
 
-// Data is partially in store. A decision must be made.
-// Get rid of the store or do everything in it even for nothing ?
+  const resetPlayerScore = () => {
+    setScore(0);
+  };
+
+  // Data is partially in store. A decision must be made.
+  // Get rid of the store or do everything in it even for nothing ?
 
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
-
 
   const slideX = useRef(new Animated.Value(0)).current;
   const actionWidth = 120; // width for the action buttons
@@ -57,18 +62,18 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
     }),
   ).current;
 
-  
   const handleSubmit = () => {
     // this doesn't make any sense.
-    setScore(updateScore(score, addedScore, operation))
+    setScore(updateScore(score, addedScore, operation));
     setAddedScore(0);
   };
 
   return (
     <View style={{margin: constants.windowHeight * 0.02}}>
-      {/* Action buttons behind */}
       <View style={playerStyles.actionContainer}>
+        {/* Hidden menu behind player widget, revealed by panResponder */}
         <ResetIcon
+          // TODO: smooth left edge.
           onPress={() => {
             resetPlayerScore();
             setAddedScore(0);
@@ -82,31 +87,22 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
           }}
         />
       </View>
-      {/* Main player card slides over */}
       <Animated.View
         style={{
           transform: [{translateX: slideX}],
         }}
         {...panResponder.panHandlers}>
-        <View style={[playerStyles.mainContainer, {
-          backgroundColor: operation === constants.operations.ADD ? '#f5f5f5': '#E1BBBB'
-          }]}>
-          <Text
-            style={{
-              ...playerStyles.playerName,
-              color: playerData.hasWon ? 'green' : 'black',
-            }}>
-            {playerData.name}
-          </Text>
+        <View
+          style={[
+            playerStyles.playerWidgetContainer,
+            {
+              backgroundColor:
+                operation === constants.operations.ADD ? '#f5f5f5' : '#E1BBBB',
+            },
+          ]}>
+          <Text style={playerStyles.playerName}>{playerData.name}</Text>
           <View style={playerStyles.scoreContainer}>
-            <Text
-              style={{
-                ...playerStyles.score,
-                color: playerData.hasWon ? 'green' : 'black',
-              }}>
-              {score}
-            </Text>
-
+            <Text style={playerStyles.score}>{score}</Text>
             <TextInput
               style={playerStyles.scoreInput}
               keyboardType="numeric"
@@ -124,8 +120,7 @@ const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 };
 
 const playerStyles = StyleSheet.create({
-  mainContainer: {
-    // margin: constants.windowHeight * 0.02,
+  playerWidgetContainer: {
     borderWidth: 1,
     borderColor: 'rgb(177, 183, 185)',
     borderRadius: playerWidgetBorderRadius,
@@ -158,16 +153,9 @@ const playerStyles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    // margin: constants.windowHeight * 0.02,
     flexDirection: 'row',
     alignItems: 'center',
     height: '100%',
     zIndex: -1,
-  },
-  actionButton: {
-    width: 60,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  }
 });
