@@ -13,6 +13,7 @@ import {PlayerData} from './services/interfaces';
 import {DeleteIcon} from './component/icon/DeleteIcon';
 import {ResetIcon} from './component/icon/ResetIcon';
 import {updateScore} from './services/score_service';
+import {usePlayerScoreContext} from './context/PlayerContext';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 
@@ -23,8 +24,7 @@ export const Player = ({
   playerData: PlayerData;
   operation: string; // impact style and calculus behaviour
 }) => {
-  const [addedScore, setAddedScore] = useState(0);
-  const [score, setScore] = useState(0);
+  const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
   const resetPlayerScore = () => {
     setScore(0);
@@ -97,7 +97,7 @@ export const Player = ({
             playerStyles.playerWidgetContainer,
             {
               backgroundColor:
-                operation === constants.operations.ADD ? '#f5f5f5' : '#E1BBBB',
+                operation === constants.operations.ADD ? '#dff8f7' : '#f8ecec',
             },
           ]}>
           <Text style={playerStyles.playerName}>{playerData.name}</Text>
@@ -157,5 +157,5 @@ const playerStyles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     zIndex: -1,
-  }
+  },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, View, StyleSheet, Button} from 'react-native';
+import {ScrollView, Text, View, StyleSheet} from 'react-native';
 
 import {GameStore, useStore} from './services/store';
 import {PlayerData} from './services/interfaces';
@@ -9,7 +9,8 @@ import {DeletePlayersButton} from './DeletePlayersButton';
 import {AddDebugPlayersButton} from './AddDebugPlayersButton';
 import {PlayerFlipWidget} from './component/PlayerFlipWidget';
 import {PressableIcon} from './component/icon/PressableIcon';
-// import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+
+// TODO: import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const SCROLL_STEP_SIZE = constants.windowHeight * 0.33;
 
@@ -107,13 +108,9 @@ export const ScoreBoard = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    borderColor: 'blue',
-    borderWidth: 1,
     height: constants.windowHeight * 0.88,
     width: constants.windowWidth * 0.94,
     alignSelf: 'center',
   },
-  playerListContainer: {
-    
-  },
+  playerListContainer: {},
 });

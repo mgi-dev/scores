@@ -2,14 +2,15 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Animated, PanResponder, Dimensions} from 'react-native';
 import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
-import { constants } from '../constants';
-
+import {constants} from '../constants';
+import {View} from 'react-native';
+import {PlayerScoreProvider} from '../context/PlayerContext';
 
 /**
  * An interactive card component that rotates 360 degrees on swipe up gestures
  * Only handle swippe logic and contains Player component.
  * Pass to the player the operaton to use based on flip state.
- * 
+ *
  * @param {PlayerData} props.playerData - The player data to display on the card
  * @returns {JSX.Element} An animated View component with rotation transform
  *
@@ -19,8 +20,6 @@ import { constants } from '../constants';
  */
 
 export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
-
-
   const flipAnim = useRef(new Animated.Value(0)).current;
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -74,27 +73,64 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       },
     }),
   ).current;
+  
 
   const rotateX = flipAnim.interpolate({
     // too many rotation. will find anoother way.
     inputRange: [0, 1, 2],
-    outputRange: ['0deg', '360deg', '720deg'],
+    outputRange: ['0deg', '180deg', '360deg'],
+  });
+
+  const counterRotateX = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['180deg', '0deg'],
+  });
+
+  const frontOpacity = flipAnim.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [1, 0.3, 0],
+  });
+
+  const backOpacity = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
   });
 
   return (
-    <Animated.View
-      style={[
-        {
-          transform: [{rotateX}],
-        },
-      ]}
-      {...panResponder.panHandlers}>
-      <Player
-        playerData={props.playerData}
-        operation={
-        isFlipped ? constants.operations.ADD : constants.operations.SUB
-          }
-      />
-    </Animated.View>
+    <PlayerScoreProvider>
+      <View>
+        <Animated.View
+          style={[
+            {
+              transform: [{rotateX}],
+              opacity: frontOpacity,
+            },
+          ]}
+          {...panResponder.panHandlers}>
+          <Player
+            playerData={props.playerData}
+            operation={
+              isFlipped ? constants.operations.SUB : constants.operations.ADD
+            }
+          />
+        </Animated.View>
+        <Animated.View
+          style={[
+            {
+              opacity: backOpacity,
+              transform: [{rotateX: counterRotateX}],
+            },
+          ]}
+          pointerEvents={isFlipped ? 'auto' : 'none'}
+          {...panResponder.panHandlers}>
+          <Player
+            playerData={props.playerData}
+            operation={
+              isFlipped ? constants.operations.SUB : constants.operations.ADD
+            }
+          />
+        </Animated.View>
+      </View>
+    </PlayerScoreProvider>
   );
 };
