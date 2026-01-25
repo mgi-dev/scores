@@ -69,7 +69,7 @@ export const Player = ({
   };
 
   return (
-    <View style={{margin: constants.windowHeight * 0.02}}>
+    <View style={{margin: constants.windowHeight * 0.02, width: '80%'}}>
       <View style={playerStyles.actionContainer}>
         {/* Hidden menu behind player widget, revealed by panResponder */}
         <ResetIcon

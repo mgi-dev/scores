@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, PanResponder, Dimensions} from 'react-native';
+import {Animated, PanResponder, Dimensions, StyleSheet} from 'react-native';
 import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
 import {constants} from '../constants';
@@ -82,28 +82,29 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   });
 
   const counterRotateX = flipAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['180deg', '0deg'],
+    inputRange: [0, 1, 2],
+    outputRange: ['-180deg', '0deg', '180deg'],
   });
 
   const frontOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [1, 0.3, 0],
+    inputRange: [0, 0.5, 1, 1.5, 2],
+    outputRange: [1, 0.3, 0, 0.3, 1],
   });
 
   const backOpacity = flipAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
+    inputRange: [0, 0.5, 1, 1.5, 2],
+    outputRange: [0, 0.3, 1, 0.3, 0],
   });
 
   return (
     <PlayerScoreProvider>
-      <View>
+      <View style={styles.container}>
         <Animated.View
           style={[
             {
               transform: [{rotateX}],
-              opacity: frontOpacity,
+              opacity: isFlipped ? 0 : 1,
+              position: 'absolute',
             },
           ]}
           {...panResponder.panHandlers}>
@@ -117,8 +118,10 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
         <Animated.View
           style={[
             {
-              opacity: backOpacity,
+              // opacity: backOpacity,
+              opacity: isFlipped ? 1 : 0,
               transform: [{rotateX: counterRotateX}],
+              position: 'absolute',
             },
           ]}
           pointerEvents={isFlipped ? 'auto' : 'none'}
@@ -133,4 +136,35 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       </View>
     </PlayerScoreProvider>
   );
+
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    
+    height: 120,
+    width: constants.windowWidth -100,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // borderWidth: 1,
+    // borderColor: '#888',
+    // marginVertical: 60,
+    // marginHorizontal: 90
+  },
+    card: {
+    // width: CARD_WIDTH,
+    // height: CARD_HEIGHT,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backfaceVisibility: 'hidden',
+    borderWidth: 1,
+    borderColor: '#888',
+  },
+  text: {
+    fontSize: 28,
+    color: '#222',
+    fontWeight: 'bold',
+  },
+});
