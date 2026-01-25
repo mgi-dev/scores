@@ -7,9 +7,9 @@ It ain't pretty but it's workin' !
 
 <div style="display: flex; gap: 30px;">
 
-<img src="./screenshots/screenshotMenu.png" alt="Menu overview" width="200" />
+<img src="./screenshots/ScreenAddPlayer.png" alt="Menu overview" width="200" />
 
-<img src="./screenshots/screenshotScores.png" alt="Score overview" width="200" />
+<img src="./screenshots/ScreenHiddenMenu.png" alt="Score overview" width="200" />
 
 </div>
 
