@@ -10,7 +10,6 @@ import {AddDebugPlayersButton} from './AddDebugPlayersButton';
 import {PlayerFlipWidget} from './component/PlayerFlipWidget';
 import {PressableIcon} from './component/icon/PressableIcon';
 
-// TODO: import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const SCROLL_STEP_SIZE = constants.windowHeight * 0.33;
 
@@ -83,7 +82,7 @@ export const ScoreBoard = () => {
   return (
     <View style={styles.mainContainer}>
       {getScrollUpIcon()}
-      <View style={{height: '80%'}}>
+      <View style={styles.scrollViewContainer}>
         <ScrollView
           ref={scrollRef}
           scrollEnabled={false}
@@ -111,6 +110,9 @@ const styles = StyleSheet.create({
     width: constants.windowWidth * 0.94,
     alignSelf: 'center',
 
+  },
+  scrollViewContainer: {
+    height: '80%',
   },
   playerListContainer: {
 

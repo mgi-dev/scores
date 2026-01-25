@@ -72,7 +72,7 @@ export const Player = ({
   };
 
   return (
-    <View style={{width: playerWidgetWidth, alignSelf: 'center'}}>
+    <View style={playerStyles.mainContainer}>
       <View style={playerStyles.actionContainer}>
         {/* Hidden menu behind player widget, revealed by panResponder */}
         <ResetIcon
@@ -123,6 +123,10 @@ export const Player = ({
 };
 
 const playerStyles = StyleSheet.create({
+  mainContainer:{
+    width: playerWidgetWidth,
+    alignSelf: 'center',
+  },
   playerWidgetContainer: {
     borderWidth: 1,
     borderColor: 'rgb(177, 183, 185)',

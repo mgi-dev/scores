@@ -72,7 +72,7 @@ export const useStore = create<GameStore>((set, get: any) => ({
     deletePLayers: () => set({playersData: []}),
 
     deletePlayer: (playerData: PlayerData) => {
-        set({playersData: get().playersData.filter((o: PlayerData) => o.key != playerData.key),
+        set({playersData: get().playersData.filter((o: PlayerData) => o.key !== playerData.key),
         });
     },
 

@@ -68,24 +68,17 @@ export const NewPlayerInputV3 = () => {
   const renderAddPlayerIconButton = () => {
     return (
       <Animated.View
-        // Style is not final, but easier to work with in jsx.
-        style={{
-          position: 'absolute',
-          opacity: iconOpacity,
-          width: '100%',
-          alignItems: 'center',
-        }}
+        style={[
+          {opacity: iconOpacity},
+          styles.addPlayerIconContainer,
+        ]}
         pointerEvents={showInput ? 'none' : 'auto'}>
         <TouchableOpacity
           onPress={handleAddIconPress}
-          style={{
-            backgroundColor: '#e0e0e0',
-            borderRadius: 24,
-            padding: 8,
-            alignItems: 'center',
-            justifyContent: 'center',
-            transform: [{scaleX: iconWidth}],
-          }}>
+          style={[
+            {transform: [{scaleX: iconWidth}]},
+            styles.addPlayerIconButton,
+          ]}>
           <Icon name="person-add" size={32} color="#333" />
         </TouchableOpacity>
       </Animated.View>
@@ -98,8 +91,7 @@ export const NewPlayerInputV3 = () => {
         style={{
           opacity: inputOpacity,
           transform: [{scale: inputScale}],
-          width: '100%',
-          alignItems: 'center',
+          ...styles.inputMainContainer
         }}
         pointerEvents={showInput ? 'auto' : 'none'}>
         <View style={styles.inputRow}>
@@ -121,7 +113,7 @@ export const NewPlayerInputV3 = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       {renderAddPlayerIconButton()}
       {renderNameInput()}
     </View>
@@ -129,10 +121,25 @@ export const NewPlayerInputV3 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     marginVertical: 12,
   },
-
+  addPlayerIconContainer:{
+    position: 'absolute',
+    width: '100%',
+    alignItems: 'center',
+  },
+  addPlayerIconButton: {
+    backgroundColor: '#e0e0e0',
+    borderRadius: 24,
+    padding: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputMainContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
