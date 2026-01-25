@@ -91,11 +91,10 @@ export const ScoreBoard = () => {
             playerListContentHeigth.current = height;
           }}
           keyboardShouldPersistTaps="handled"
+          
           contentContainerStyle={styles.playerListContainer}>
           {playersData.map((item: PlayerData) => (
-            <View key={item.key} style={{marginBottom: 12}}>
-              <PlayerFlipWidget playerData={item} />
-            </View>
+              <PlayerFlipWidget key={item.key} playerData={item} />
           ))}
           {getDevContent()}
           <NewPlayerInputV3 />
@@ -108,9 +107,12 @@ export const ScoreBoard = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: constants.windowHeight * 0.88,
+    height: constants.windowHeight * 0.98,
     width: constants.windowWidth * 0.94,
     alignSelf: 'center',
+
   },
-  playerListContainer: {},
+  playerListContainer: {
+    
+  },
 });

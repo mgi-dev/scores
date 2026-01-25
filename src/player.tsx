@@ -16,6 +16,9 @@ import {updateScore} from './services/score_service';
 import {usePlayerScoreContext} from './context/PlayerContext';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
+const playerWidgetWidth = constants.windowWidth * 0.90; // to smooth the edges of player widget.
+
+
 
 export const Player = ({
   playerData,
@@ -69,7 +72,7 @@ export const Player = ({
   };
 
   return (
-    <View style={{margin: constants.windowHeight * 0.02, width: '80%'}}>
+    <View style={{width: playerWidgetWidth, alignSelf: "center"}}>
       <View style={playerStyles.actionContainer}>
         {/* Hidden menu behind player widget, revealed by panResponder */}
         <ResetIcon
@@ -129,7 +132,7 @@ const playerStyles = StyleSheet.create({
   },
   scoreContainer: {
     flexDirection: 'row',
-    width: constants.windowWidth,
+    width: playerWidgetWidth,
     justifyContent: 'space-evenly',
   },
   playerName: {

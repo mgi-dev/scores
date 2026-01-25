@@ -59,7 +59,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
     });
   };
 
-  const panResponder = useRef(
+    const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) => gestureState.dy < -20,
       onPanResponderRelease: (_, gestureState) => {
@@ -97,8 +97,9 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   });
 
   return (
-    <PlayerScoreProvider>
+    
       <View style={styles.container}>
+        <PlayerScoreProvider>
         <Animated.View
           style={[
             {
@@ -133,8 +134,8 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
             }
           />
         </Animated.View>
-      </View>
-    </PlayerScoreProvider>
+      </PlayerScoreProvider>
+    </View>
   );
 
 };
@@ -142,29 +143,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
 
 const styles = StyleSheet.create({
   container: {
-    
     height: 120,
-    width: constants.windowWidth -100,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // borderWidth: 1,
-    // borderColor: '#888',
-    // marginVertical: 60,
-    // marginHorizontal: 90
-  },
-    card: {
-    // width: CARD_WIDTH,
-    // height: CARD_HEIGHT,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backfaceVisibility: 'hidden',
-    borderWidth: 1,
-    borderColor: '#888',
-  },
-  text: {
-    fontSize: 28,
-    color: '#222',
-    fontWeight: 'bold',
+    alignItems: "center"
   },
 });
