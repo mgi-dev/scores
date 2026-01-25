@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, PanResponder, Dimensions, StyleSheet} from 'react-native';
+import {Animated, PanResponder, StyleSheet} from 'react-native';
 import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
 import {constants} from '../constants';
@@ -29,11 +29,11 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       // Even gemini could not do such a masterpiece.
       if (value < 0.5) {
         setIsFlipped(false);
-      } else if (0.5 < value && value <= 1) {
+      } else if (value > 0.5 && value <= 1) {
         setIsFlipped(true);
       } else if (value > 1.5 && value <= 2) {
         setIsFlipped(false);
-      } else setIsFlipped(true);
+      } else {setIsFlipped(true);}
     });
     return () => flipAnim.removeListener(id);
   }, [flipAnim]);
@@ -62,7 +62,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
     const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) => gestureState.dy < -20,
-      onPanResponderRelease: (_, gestureState) => {
+      onPanResponderRelease: (_, __) => {
         flipAnim.stopAnimation((currentValue: number) => {
           if (currentValue < 1) {
             flipToBack();
@@ -73,7 +73,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       },
     }),
   ).current;
-  
+
 
   const rotateX = flipAnim.interpolate({
     // too many rotation. will find anoother way.
@@ -86,18 +86,8 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
     outputRange: ['-180deg', '0deg', '180deg'],
   });
 
-  const frontOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1, 1.5, 2],
-    outputRange: [1, 0.3, 0, 0.3, 1],
-  });
-
-  const backOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1, 1.5, 2],
-    outputRange: [0, 0.3, 1, 0.3, 0],
-  });
-
   return (
-    
+
       <View style={styles.container}>
         <PlayerScoreProvider>
         <Animated.View
@@ -144,6 +134,6 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    alignItems: "center"
+    alignItems: 'center',
   },
 });

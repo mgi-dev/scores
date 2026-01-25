@@ -91,7 +91,7 @@ export const ScoreBoard = () => {
             playerListContentHeigth.current = height;
           }}
           keyboardShouldPersistTaps="handled"
-          
+
           contentContainerStyle={styles.playerListContainer}>
           {playersData.map((item: PlayerData) => (
               <PlayerFlipWidget key={item.key} playerData={item} />
@@ -113,6 +113,6 @@ const styles = StyleSheet.create({
 
   },
   playerListContainer: {
-    
+
   },
 });

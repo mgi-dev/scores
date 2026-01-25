@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import {
   Text,
   TextInput,
@@ -72,7 +72,7 @@ export const Player = ({
   };
 
   return (
-    <View style={{width: playerWidgetWidth, alignSelf: "center"}}>
+    <View style={{width: playerWidgetWidth, alignSelf: 'center'}}>
       <View style={playerStyles.actionContainer}>
         {/* Hidden menu behind player widget, revealed by panResponder */}
         <ResetIcon

@@ -5,10 +5,10 @@ import { useStore } from './services/store';
 
 
 const playerNames: Array<string> = [
-  "Jeremy",
-  "Henry",
-  "Eve"
-]
+  'Jeremy',
+  'Henry',
+  'Eve',
+];
 
 export const AddDebugPlayersButton = () => {
   const addPlayer = useStore((state: any) => state.addPlayer);
@@ -17,7 +17,7 @@ export const AddDebugPlayersButton = () => {
     for (var name of playerNames){
       addPlayer(name);
     }
-    
+
   };
 
   return (
