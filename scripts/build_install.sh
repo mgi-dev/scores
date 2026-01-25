@@ -1,4 +1,4 @@
 cd android
 ./gradlew assembleDebug
-adb install app/build/outputs/apk/release/app-debug.apk
+adb install app/build/outputs/apk/debug/app-debug.apk
 cd ..

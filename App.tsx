@@ -6,11 +6,9 @@
  */
 
 import React from 'react';
-import {
-  View,
-} from 'react-native';
 
 import {ScoreBoard} from './src/scoreBoard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -24,9 +22,9 @@ function App(): React.JSX.Element {
 
 
   return (
-    <View style={backgroundStyle}>
+    <SafeAreaView style={backgroundStyle}>
       <ScoreBoard />
-    </View>
+    </SafeAreaView>
   );
 }
 
