@@ -70,8 +70,7 @@ export const ScoreBoard = () => {
   };
 
   const getDevContent = () => {
-    // return __DEV__ ? (
-    return false ? (
+    return __DEV__ ? (
       <View>
         <AddDebugPlayersButton />
         <DeletePlayersButton />

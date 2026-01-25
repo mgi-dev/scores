@@ -1,3 +1,12 @@
+## 0.6.0
+### Added
+- Delete old menu && useless features.
+- Add widget built in controls for substract, deletion, reset, etc.
+- Add animations to Player Widget.
+- Add safe area view.
+- Fix list duplicate key bug.
+
+
 ## 0.5.0
 ### Added
 - Dynamic views dimensions
