@@ -107,7 +107,7 @@ export const ScoreBoard = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: constants.windowHeight * 0.98,
+    height: constants.windowHeight * 0.94,
     width: constants.windowWidth * 0.94,
     alignSelf: 'center',
 
