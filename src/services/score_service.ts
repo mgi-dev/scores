@@ -1,11 +1,16 @@
 import { constants } from '../constants';
 
 
-export const updateScore = (score: number, difference: number, operation: string) : number => {
+export const updateScore = (score: string, difference: string, operation: string) : string => {
+    if (isNaN(Number(difference))){
+        // difference should never be NaN. But it can happen Anyway.
+        // This condition handle impossible cases.
+        return Number(score).toString()
+    }
     if (operation === constants.operations.ADD) {
-        return score + difference;
+        return (Number(score) + Number(difference)).toString();
     } else {
-        return score - difference;
+        return (Number(score) - Number(difference)).toString();
     }
 };
 

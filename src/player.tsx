@@ -30,7 +30,7 @@ export const Player = ({
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
   const resetPlayerScore = () => {
-    setScore(0);
+    setScore("0");
   };
 
   // Data is partially in store. A decision must be made.
@@ -68,7 +68,7 @@ export const Player = ({
   const handleSubmit = () => {
     // this doesn't make any sense.
     setScore(updateScore(score, addedScore, operation));
-    setAddedScore(0);
+    setAddedScore("0");
   };
 
   return (
@@ -110,10 +110,11 @@ export const Player = ({
               style={playerStyles.scoreInput}
               keyboardType="numeric"
               onChangeText={text => {
-                setAddedScore(Number(text));
+                setAddedScore(text);
               }}
               onSubmitEditing={handleSubmit}
-              value={addedScore !== 0 ? String(addedScore) : ''}
+              // Weird condition is here to prevent the display of an immortal "0" on screen.
+              value={addedScore !== "0" ? String(addedScore) : ''}
             />
           </View>
         </View>
