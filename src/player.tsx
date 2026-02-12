@@ -79,7 +79,7 @@ export const Player = ({
           // TODO: smooth left edge.
           onPress={() => {
             resetPlayerScore();
-            setAddedScore(0);
+            setAddedScore('0');
           }}
         />
         <DeleteIcon
@@ -114,7 +114,7 @@ export const Player = ({
               }}
               onSubmitEditing={handleSubmit}
               // Weird condition is here to prevent the display of an immortal "0" on screen.
-              value={addedScore !== "0" ? String(addedScore) : ''}
+              value={addedScore !== "0" ? addedScore : ''}
             />
           </View>
         </View>

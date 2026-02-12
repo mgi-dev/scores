@@ -5,7 +5,7 @@ export const updateScore = (score: string, difference: string, operation: string
     if (isNaN(Number(difference))){
         // difference should never be NaN. But it can happen Anyway.
         // This condition handle impossible cases.
-        return Number(score).toString()
+        return Number(score).toString();
     }
     if (operation === constants.operations.ADD) {
         return (Number(score) + Number(difference)).toString();
