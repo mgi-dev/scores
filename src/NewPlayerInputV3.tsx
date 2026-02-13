@@ -17,7 +17,7 @@ export const NewPlayerInputV3 = () => {
   const addPlayer = useStore((state: any) => state.addPlayer);
   const morphAnim = useRef(new Animated.Value(0)).current; // 0: icon, 1: input
 
-  const animationDuration = 900;
+  const animationDuration = 200;
 
   const animateToInput = () => {
     Animated.timing(morphAnim, {
