@@ -21,11 +21,11 @@ const playerWidgetWidth = constants.windowWidth * 0.90;
 export const Player = ({
   playerData,
   operation,
-  slideX
+  slideX,
 }: {
   playerData: PlayerData;
   operation: string; // impact style and calculus behaviour
-  slideX: any; // impact style and calculus behaviour
+  slideX: Animated.Value;
 }) => {
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
@@ -47,11 +47,11 @@ export const Player = ({
 
   return (
     <View style={playerStyles.mainContainer}>
-      <HiddenPlayerMenu 
+      <HiddenPlayerMenu
         onReset={()=> {
           resetPlayerScore();
         }}
-        onDelete={()=>{deletePlayer(playerData)}}
+        onDelete={()=>{deletePlayer(playerData);}}
         customBorderRadius={8}
       />
       <Animated.View

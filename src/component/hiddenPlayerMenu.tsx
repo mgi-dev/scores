@@ -13,11 +13,11 @@ interface HiddenPlayerMenuProps {
 
 export const HiddenPlayerMenu = ({ customBorderRadius, onReset, onDelete }: HiddenPlayerMenuProps) => {
     /* Hidden menu behind player widget, revealed by panResponder */
-  
+
     const borderRadiusStyle = {
-        borderBottomRightRadius: customBorderRadius ? customBorderRadius: 0,
-        borderTopRightRadius: customBorderRadius ? customBorderRadius: 0,
-    }
+        borderBottomRightRadius: customBorderRadius ? customBorderRadius : 0,
+        borderTopRightRadius: customBorderRadius ? customBorderRadius : 0,
+    };
 
     return (
       <View style={styles.actionContainer}>

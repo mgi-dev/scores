@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, PanResponder, StyleSheet} from 'react-native';
+import {Animated, PanResponder, PanResponderGestureState, StyleSheet} from 'react-native';
 import {Player} from '../player';
 import {PlayerData} from '../services/interfaces';
 import {constants} from '../constants';
@@ -7,7 +7,7 @@ import {View} from 'react-native';
 import {PlayerScoreProvider} from '../context/PlayerContext';
 
 /**
- * An interactive card component that rotates on swipe gestures
+ * An interactive card component that rotates and slide on swipe gestures
  * Only handle swippe logic and contains Player component.
  * Pass to the player the operaton to use based on flip state.
  *
@@ -19,11 +19,11 @@ import {PlayerScoreProvider} from '../context/PlayerContext';
  * <PlayerFlipWidget playerData={playerData} />
  */
 
-export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
+export const AnimatedPlayerWidget = (props: {playerData: PlayerData}) => {
   const flipAnim = useRef(new Animated.Value(0)).current;
   const slideX = useRef(new Animated.Value(0)).current;
-
   const [isFlipped, setIsFlipped] = useState(false);
+
 
   useEffect(() => {
     const id = flipAnim.addListener(({value}) => {
@@ -64,76 +64,51 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
     });
   };
 
-  const actionWidth = 120;
 
-  // const slideXPanResponder = useRef(
-  //   PanResponder.create({
-  //     onMoveShouldSetPanResponder: (_, gestureState) =>
-  //       Math.abs(gestureState.dx) > 10,
-  //     onPanResponderMove: (_, gestureState) => {
-  //       if (gestureState.dx < 0) {
-  //         slideX.setValue(Math.max(gestureState.dx, -actionWidth));
-  //       }
-  //     },
-  //     onPanResponderRelease: (_, gestureState) => {
-  //       if (gestureState.dx < -actionWidth / 3) {
-  //         Animated.spring(slideX, {
-  //           toValue: -actionWidth,
-  //           useNativeDriver: true,
-  //         }).start();
-  //       } else {
-  //         Animated.spring(slideX, {
-  //           toValue: 0,
-  //           useNativeDriver: true,
-  //         }).start();
-  //       }
-  //     },
-  //   }),
-  // ).current;
-
-  const handleFlipAnimation = (gestureState: any) => {
+  const handleFlipAnimation = (gestureState: PanResponderGestureState) => {
     flipAnim.stopAnimation((currentValue: number) => {
       let isSwipingUp = gestureState.dy < -minimumGestureSwipeY;
-      // console.log("capture gesture = " + gestureState.dy + ", swipping up ==" + isSwipingUp)
       let currentRoundedValue = Math.round(currentValue);
       let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
 
       let shouldReset = Math.abs(nextValue) === 2;
-      // console.log("currentvalue = " + currentValue + " (" + currentRoundedValue+ ")"+ " nextValue:"+ nextValue+ ", shouldReset="+ shouldReset)
       flipToValue(nextValue, shouldReset);
     });
   };
 
-  const handleSlideXAnimation = (gestureState: any) => {
-    if (gestureState.dx < -actionWidth / 3) {
-          Animated.spring(slideX, {
-            toValue: -actionWidth,
-            useNativeDriver: true,
-          }).start();
-        } else {
-          Animated.spring(slideX, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start();
-        }
+  const slideXLeftValue = -120;
+  const slideXRightValue = 0;
+
+  const animateSlideXTo = (xSlideTarget: number) =>{
+      Animated.spring(slideX, {
+        toValue: xSlideTarget,
+        useNativeDriver: true,
+      }).start();
+  };
+
+  const handleSlideXAnimation = (gestureState: PanResponderGestureState) => {
+    if (gestureState.dx < 0) {
+      animateSlideXTo(slideXLeftValue);
+    } else {
+      animateSlideXTo(slideXRightValue);
+    }
   };
 
   const minimumGestureSwipeY = 25;
-  const minimumGestureSwipeX = 10;
+  const minimumGestureSwipeX = 25;
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => {
+      onMoveShouldSetPanResponder: (_, gestureState: PanResponderGestureState) => {
         return (
           Math.abs(gestureState.dy) > minimumGestureSwipeY ||
           Math.abs(gestureState.dx) > minimumGestureSwipeX
         );
       },
-      onPanResponderRelease: (_, gestureState) => {
-        // Handle user cancelling his gesture.
+      onPanResponderRelease: (_, gestureState: PanResponderGestureState) => {
         if (Math.abs(gestureState.dy) > minimumGestureSwipeY) {
-          handleFlipAnimation(gestureState)
+          handleFlipAnimation(gestureState);
         } else if (Math.abs(gestureState.dx) > minimumGestureSwipeX){
-          handleSlideXAnimation(gestureState)
+          handleSlideXAnimation(gestureState);
         }
       },
     }),
