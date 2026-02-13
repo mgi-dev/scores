@@ -13,8 +13,8 @@ export const PlayerScoreContext = createContext<PlayerContextType | undefined>(
 
 export const PlayerScoreProvider = ({children}: {children: ReactNode}) => {
   // TODO: check this memoize thing.
-  const [score, setScore] = useState("0");
-  const [addedScore, setAddedScore] = useState("0");
+  const [score, setScore] = useState('0');
+  const [addedScore, setAddedScore] = useState('0');
 
   return (
     <PlayerScoreContext.Provider

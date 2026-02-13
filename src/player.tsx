@@ -30,7 +30,7 @@ export const Player = ({
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
   const resetPlayerScore = () => {
-    setScore("0");
+    setScore('0');
   };
 
   // Data is partially in store. A decision must be made.
@@ -68,7 +68,7 @@ export const Player = ({
   const handleSubmit = () => {
     // this doesn't make any sense.
     setScore(updateScore(score, addedScore, operation));
-    setAddedScore("0");
+    setAddedScore('0');
   };
 
   return (
@@ -98,10 +98,7 @@ export const Player = ({
         <View
           style={[
             playerStyles.playerWidgetContainer,
-            {
-              backgroundColor:
-                operation === constants.operations.ADD ? '#dff8f7' : '#f8ecec',
-            },
+            operation === constants.operations.ADD ? playerStyles.addWidgetContainer : playerStyles.substractWidgetContainer,
           ]}>
           <Text style={playerStyles.playerName}>{playerData.name}</Text>
           <View style={playerStyles.scoreContainer}>
@@ -114,7 +111,7 @@ export const Player = ({
               }}
               onSubmitEditing={handleSubmit}
               // Weird condition is here to prevent the display of an immortal "0" on screen.
-              value={addedScore !== "0" ? addedScore : ''}
+              value={addedScore !== '0' ? addedScore : ''}
             />
           </View>
         </View>
@@ -124,7 +121,7 @@ export const Player = ({
 };
 
 const playerStyles = StyleSheet.create({
-  mainContainer:{
+  mainContainer: {
     width: playerWidgetWidth,
     alignSelf: 'center',
   },
@@ -134,6 +131,12 @@ const playerStyles = StyleSheet.create({
     borderRadius: playerWidgetBorderRadius,
     paddingBottom: constants.windowHeight * 0.02,
     backgroundColor: '#f5f5f5',
+  },
+  addWidgetContainer: {
+    backgroundColor: '#dff8f7',
+  },
+  substractWidgetContainer: {
+    backgroundColor: '#f8ecec',
   },
   scoreContainer: {
     flexDirection: 'row',

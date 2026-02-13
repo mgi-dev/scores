@@ -8,7 +8,7 @@ export const updateScore = (score: string, difference: string, operation: string
     }
     if (isNaN(Number(score))){
         // Happen when playing with ∞ and -∞
-        return "0";
+        return '0';
     }
     if (operation === constants.operations.ADD) {
         var updatedScore = (Number(score) + Number(difference));
@@ -16,11 +16,11 @@ export const updateScore = (score: string, difference: string, operation: string
         var updatedScore = (Number(score) - Number(difference));
     }
     if (updatedScore > 999999999){
-        return "∞"
+        return '∞';
     } else if (updatedScore < -999999999){
-        return "-∞"
+        return '-∞';
     } else {
-        return updatedScore.toString()
+        return updatedScore.toString();
     }
 };
 

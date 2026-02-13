@@ -28,8 +28,8 @@ export const NewPlayerInputV3 = () => {
       useNativeDriver: true,
       easing: Easing.out(Easing.ease),
     }).start(() => {
-      setShowInput(true)
-      playerNameInputRef.current?.focus()
+      setShowInput(true);
+      playerNameInputRef.current?.focus();
     });
   };
 
@@ -96,7 +96,7 @@ export const NewPlayerInputV3 = () => {
         style={{
           opacity: inputOpacity,
           transform: [{scale: inputScale}],
-          ...styles.inputMainContainer
+          ...styles.inputMainContainer,
         }}
         pointerEvents={showInput ? 'auto' : 'none'}>
         <View style={styles.inputRow}>

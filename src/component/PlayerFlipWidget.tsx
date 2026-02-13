@@ -23,8 +23,8 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   const flipAnim = useRef(new Animated.Value(0)).current;
 
   const [isFlipped, setIsFlipped] = useState(false);
-  
-  
+
+
   useEffect(() => {
     const id = flipAnim.addListener(({value}) => {
       /* Track value of animation to set a boolean (isFlipped).
@@ -32,7 +32,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       */
       if (value >= -2.5 && value < -1.5) {
         setIsFlipped(false); // blue
-      } else if (value >=-1.5 && value < -0.5) {
+      } else if (value >= -1.5 && value < -0.5) {
         setIsFlipped(true); // red
       } else if (value >= -0.5 && value <= 0.5) {
         setIsFlipped(false); // blue
@@ -41,7 +41,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       } else if (value > 1.5 && value <= 2.5) {
         setIsFlipped(false);
       } else {
-        console.log("Value of FlipAnimation is out of range (", value, "). Should not be possible.")
+        console.log('Value of FlipAnimation is out of range (', value, '). Should not be possible.');
       }
     });
     return () => flipAnim.removeListener(id);
@@ -67,11 +67,11 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       onPanResponderRelease: (_, gestureState) => {
         flipAnim.stopAnimation((currentValue: number) => {
           let isSwipingUp = gestureState.dy < -30;
-          let currentRoundedValue = Math.round(currentValue)
-          let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1
-          
-          let shouldReset = Math.abs(nextValue) === 2
-          flipToValue(nextValue, shouldReset)
+          let currentRoundedValue = Math.round(currentValue);
+          let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
+
+          let shouldReset = Math.abs(nextValue) === 2;
+          flipToValue(nextValue, shouldReset);
         });
       },
     }),
@@ -94,6 +94,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
         <PlayerScoreProvider>
         <Animated.View
           style={[
+            /* eslint-disable-next-line react-native/no-inline-styles */
             {
               transform: [{rotateX}],
               opacity: isFlipped ? 0 : 1,
@@ -110,9 +111,10 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
         </Animated.View>
         <Animated.View
           style={[
+            /* eslint-disable-next-line react-native/no-inline-styles */
             {
-              opacity: isFlipped ? 1 : 0,
               transform: [{rotateX: counterRotateX}],
+              opacity: isFlipped ? 1 : 0,
               position: 'absolute',
             },
           ]}
