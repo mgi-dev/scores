@@ -63,10 +63,10 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
 
     const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 20,
+      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 30,
       onPanResponderRelease: (_, gestureState) => {
         flipAnim.stopAnimation((currentValue: number) => {
-          let isSwipingUp = gestureState.dy < -20;
+          let isSwipingUp = gestureState.dy < -30;
           let currentRoundedValue = Math.round(currentValue)
           let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1
           

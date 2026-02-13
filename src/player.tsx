@@ -39,7 +39,7 @@ export const Player = ({
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
 
   const slideX = useRef(new Animated.Value(0)).current;
-  const actionWidth = 120; // width for the action buttons
+  const actionWidth = 120;
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) =>
@@ -50,7 +50,7 @@ export const Player = ({
         }
       },
       onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -actionWidth / 2) {
+        if (gestureState.dx < -actionWidth / 3) {
           Animated.spring(slideX, {
             toValue: -actionWidth,
             useNativeDriver: true,
