@@ -47,7 +47,7 @@ export const NewPlayerInputV3 = () => {
   };
 
   const handleValidate = () => {
-    addPlayer(name);
+    addPlayer(name.substring(0, 30));
     setName('');
 
     animateToIcon();
