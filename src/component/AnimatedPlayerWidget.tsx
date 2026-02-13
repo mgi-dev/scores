@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, PanResponder, PanResponderGestureState, StyleSheet} from 'react-native';
 import {Player} from '../player';
-import {PlayerData} from '../services/interfaces';
+import {PlayerData} from '../service/interfaces';
 import {constants} from '../constants';
 import {View} from 'react-native';
 import {PlayerScoreProvider} from '../context/PlayerContext';

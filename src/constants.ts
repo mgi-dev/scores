@@ -8,10 +8,6 @@ export const constants = {
     veryBigFont: 35,
     windowWidth : Dimensions.get('window').width,
     windowHeight : Dimensions.get('window').height,
-    rules: {
-        DEFAULT: 'default',
-        DUMBAL: 'dumbal',
-    },
     operations: {
         ADD: 'ADD',
         SUB: 'SUB',

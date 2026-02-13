@@ -7,9 +7,9 @@ import {
   Animated,
 } from 'react-native';
 import {constants} from './constants';
-import {useStore, GameStore} from './services/store';
-import {PlayerData} from './services/interfaces';
-import {updateScore} from './services/score_service';
+import {useStore, GameStore} from './service/store';
+import {PlayerData} from './service/interfaces';
+import {updateScore} from './service/score_service';
 import {usePlayerScoreContext} from './context/PlayerContext';
 import { HiddenPlayerMenu } from './component/hiddenPlayerMenu';
 
