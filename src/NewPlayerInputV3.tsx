@@ -99,6 +99,7 @@ export const NewPlayerInputV3 = () => {
             style={styles.input}
             value={name}
             onChangeText={setName}
+            onSubmitEditing={handleValidate}
             placeholder="Nom du joueur"
             autoFocus={showInput}
           />
