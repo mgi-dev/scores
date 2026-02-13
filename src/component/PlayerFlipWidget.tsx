@@ -7,7 +7,7 @@ import {View} from 'react-native';
 import {PlayerScoreProvider} from '../context/PlayerContext';
 
 /**
- * An interactive card component that rotates 360 degrees on swipe up gestures
+ * An interactive card component that rotates on swipe gestures
  * Only handle swippe logic and contains Player component.
  * Pass to the player the operaton to use based on flip state.
  *
@@ -23,52 +23,55 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   const flipAnim = useRef(new Animated.Value(0)).current;
 
   const [isFlipped, setIsFlipped] = useState(false);
-
+  
+  
   useEffect(() => {
     const id = flipAnim.addListener(({value}) => {
-      // Even gemini could not do such a masterpiece.
-      if (value < 0.5) {
+      /* Track value of animation to set a boolean (isFlipped).
+      The boolean drive the logic of the component, it switch styles and math operations.
+      */
+      if (value >= -2.5 && value < -1.5) {
+        setIsFlipped(false); // blue
+      } else if (value >=-1.5 && value < -0.5) {
+        setIsFlipped(true); // red
+      } else if (value >= -0.5 && value <= 0.5) {
+        setIsFlipped(false); // blue
+      } else if (value > 0.5 && value <= 1.5) {
+        setIsFlipped(true); // red
+      } else if (value > 1.5 && value <= 2.5) {
         setIsFlipped(false);
-      } else if (value > 0.5 && value <= 1) {
-        setIsFlipped(true);
-      } else if (value > 1.5 && value <= 2) {
-        setIsFlipped(false);
-      } else {setIsFlipped(true);}
+      } else {
+        console.log("Value of FlipAnimation is out of range (", value, "). Should not be possible.")
+      }
     });
     return () => flipAnim.removeListener(id);
   }, [flipAnim]);
 
-  const flipToBack = () => {
+  const flipToValue = (valueToFlip: number, shouldReset: boolean = false) => {
     Animated.timing(flipAnim, {
-      toValue: 1,
-      duration: 400,
+      toValue: valueToFlip,
+      duration: 350,
       useNativeDriver: false,
     }).start(() => {
-      console.log('fliping');
+      if (shouldReset){
+        // Reseting allow to have an "infinite" animation.
+        flipAnim.setValue(0);
+      }
     });
   };
 
-  const flipToFront = () => {
-    Animated.timing(flipAnim, {
-      toValue: 2,
-      duration: 400,
-      useNativeDriver: false,
-    }).start(() => {
-      flipAnim.setValue(0);
-      console.log('fliping again');
-    });
-  };
 
     const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => gestureState.dy < -20,
-      onPanResponderRelease: (_, __) => {
+      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 20,
+      onPanResponderRelease: (_, gestureState) => {
         flipAnim.stopAnimation((currentValue: number) => {
-          if (currentValue < 1) {
-            flipToBack();
-          } else {
-            flipToFront();
-          }
+          let isSwipingUp = gestureState.dy < -20;
+          let currentRoundedValue = Math.round(currentValue)
+          let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1
+          
+          let shouldReset = Math.abs(nextValue) === 2
+          flipToValue(nextValue, shouldReset)
         });
       },
     }),
@@ -76,14 +79,13 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
 
 
   const rotateX = flipAnim.interpolate({
-    // too many rotation. will find anoother way.
-    inputRange: [0, 1, 2],
-    outputRange: ['0deg', '180deg', '360deg'],
+    inputRange: [-2, -1, 0, 1, 2],
+    outputRange: ['-360deg', '-180deg', '0deg', '180deg', '360deg'],
   });
 
   const counterRotateX = flipAnim.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: ['-180deg', '0deg', '180deg'],
+    inputRange: [-2, -1, 0, 1, 2],
+    outputRange: ['-540deg', '-360deg', '-180deg', '0deg', '180deg'],
   });
 
   return (
@@ -109,7 +111,6 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
         <Animated.View
           style={[
             {
-              // opacity: backOpacity,
               opacity: isFlipped ? 1 : 0,
               transform: [{rotateX: counterRotateX}],
               position: 'absolute',
