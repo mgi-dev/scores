@@ -1,20 +1,30 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useStore } from './services/store';
+import { useStore } from '../service/store';
 
-export const DeletePlayersButton = () => {
-  const deletePLayers = useStore((state: any) => state.deletePLayers);
 
-  const handleDelete = () => {
-    deletePLayers();
+const playerNames: Array<string> = [
+  'Jeremy',
+  'Henry',
+  'Eve',
+];
+
+export const AddDebugPlayersButton = () => {
+  const addPlayer = useStore((state: any) => state.addPlayer);
+
+  const handlePress = () => {
+    for (var name of playerNames){
+      addPlayer(name);
+    }
+
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleDelete} style={styles.button}>
-        <Icon name="delete" size={24} color="#fff" />
-        <Text style={styles.text}>Supprimer tous les joueurs</Text>
+      <TouchableOpacity onPress={handlePress} style={styles.button}>
+        <Icon name="add" size={24} color="#fff" />
+        <Text style={styles.text}>Ajouter X joueurs</Text>
       </TouchableOpacity>
     </View>
   );
@@ -27,7 +37,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    backgroundColor: '#e53935',
+    backgroundColor: 'green',
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 18,

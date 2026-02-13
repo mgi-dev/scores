@@ -8,10 +8,10 @@ import {
   Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {constants} from './constants';
-import {useStore} from './services/store';
+import {constants} from '../service/constants';
+import {useStore} from '../service/store';
 
-export const NewPlayerInputV3 = () => {
+export const NewPlayerInput = () => {
   const [showInput, setShowInput] = useState(false);
   const playerNameInputRef = useRef<TextInput>(null);
 

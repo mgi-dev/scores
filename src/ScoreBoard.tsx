@@ -1,12 +1,12 @@
 import React from 'react';
 import {ScrollView, Text, View, StyleSheet} from 'react-native';
 
-import {GameStore, useStore} from './services/store';
-import {PlayerData} from './services/interfaces';
-import {constants} from './constants';
-import {NewPlayerInputV3} from './NewPlayerInputV3';
-import {DeletePlayersButton} from './DeletePlayersButton';
-import {AddDebugPlayersButton} from './AddDebugPlayersButton';
+import {GameStore, useStore} from './service/store';
+import {PlayerData} from './service/interfaces';
+import {constants} from './service/constants';
+import {NewPlayerInput} from './component/NewPlayerInput';
+import {DeletePlayersButton} from './component/DeletePlayersButton';
+import {AddDebugPlayersButton} from './component/AddDebugPlayersButton';
 import {AnimatedPlayerWidget} from './component/AnimatedPlayerWidget';
 import {PressableIcon} from './component/icon/PressableIcon';
 
@@ -96,7 +96,7 @@ export const ScoreBoard = () => {
               <AnimatedPlayerWidget key={item.key} playerData={item} />
           ))}
           {getDevContent()}
-          <NewPlayerInputV3 />
+          <NewPlayerInput />
         </ScrollView>
       </View>
       {getScrollDownIcon()}

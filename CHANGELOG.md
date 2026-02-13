@@ -1,3 +1,7 @@
+## 0.7.4
+### Cleaned
+- Light refacto and dead code cleaning.
+
 ## 0.7.3
 ### Fixed
 - Link state between player components.
