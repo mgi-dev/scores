@@ -23,37 +23,3 @@ export const updateScore = (score: string, difference: string, operation: string
         return updatedScore.toString();
     }
 };
-
-
-export const hasWon = (selectedRule: string, score: number, targetScore: number, operation: string): boolean => {
-    switch(selectedRule){
-        case constants.rules.DEFAULT: {
-            return defaultRule(score, targetScore, operation);
-        }
-        case constants.rules.DUMBAL: {
-            return dumbalRule(score, targetScore, operation);
-        }
-        default: {
-            return false;
-        }
-    }
-};
-
-
-
-const defaultRule = (score: number, targetScore: number, operation: string): boolean => {
-    if (operation === constants.operations.ADD) {
-        return score >= targetScore;
-    } else {
-        return score <= targetScore;
-    }
-};
-
-
-const dumbalRule = (score: number, targetScore: number, operation: string): boolean => {
-    if (operation === constants.operations.ADD) {
-        return score >= targetScore;
-    } else {
-        return score <= targetScore;
-    }
-};
