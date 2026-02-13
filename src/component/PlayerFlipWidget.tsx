@@ -21,9 +21,9 @@ import {PlayerScoreProvider} from '../context/PlayerContext';
 
 export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   const flipAnim = useRef(new Animated.Value(0)).current;
+  const slideX = useRef(new Animated.Value(0)).current;
 
   const [isFlipped, setIsFlipped] = useState(false);
-
 
   useEffect(() => {
     const id = flipAnim.addListener(({value}) => {
@@ -41,7 +41,11 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       } else if (value > 1.5 && value <= 2.5) {
         setIsFlipped(false);
       } else {
-        console.log('Value of FlipAnimation is out of range (', value, '). Should not be possible.');
+        console.log(
+          'Value of FlipAnimation is out of range (',
+          value,
+          '). Should not be possible.',
+        );
       }
     });
     return () => flipAnim.removeListener(id);
@@ -53,35 +57,87 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
       duration: 350,
       useNativeDriver: false,
     }).start(() => {
-      if (shouldReset){
+      if (shouldReset) {
         // Reseting allow to have an "infinite" animation.
         flipAnim.setValue(0);
       }
     });
   };
 
-    const minimumGestureSwipeY = 25
-    const panResponder = useRef(
+  const actionWidth = 120;
+
+  // const slideXPanResponder = useRef(
+  //   PanResponder.create({
+  //     onMoveShouldSetPanResponder: (_, gestureState) =>
+  //       Math.abs(gestureState.dx) > 10,
+  //     onPanResponderMove: (_, gestureState) => {
+  //       if (gestureState.dx < 0) {
+  //         slideX.setValue(Math.max(gestureState.dx, -actionWidth));
+  //       }
+  //     },
+  //     onPanResponderRelease: (_, gestureState) => {
+  //       if (gestureState.dx < -actionWidth / 3) {
+  //         Animated.spring(slideX, {
+  //           toValue: -actionWidth,
+  //           useNativeDriver: true,
+  //         }).start();
+  //       } else {
+  //         Animated.spring(slideX, {
+  //           toValue: 0,
+  //           useNativeDriver: true,
+  //         }).start();
+  //       }
+  //     },
+  //   }),
+  // ).current;
+
+  const handleFlipAnimation = (gestureState: any) => {
+    flipAnim.stopAnimation((currentValue: number) => {
+      let isSwipingUp = gestureState.dy < -minimumGestureSwipeY;
+      // console.log("capture gesture = " + gestureState.dy + ", swipping up ==" + isSwipingUp)
+      let currentRoundedValue = Math.round(currentValue);
+      let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
+
+      let shouldReset = Math.abs(nextValue) === 2;
+      // console.log("currentvalue = " + currentValue + " (" + currentRoundedValue+ ")"+ " nextValue:"+ nextValue+ ", shouldReset="+ shouldReset)
+      flipToValue(nextValue, shouldReset);
+    });
+  };
+
+  const handleSlideXAnimation = (gestureState: any) => {
+    if (gestureState.dx < -actionWidth / 3) {
+          Animated.spring(slideX, {
+            toValue: -actionWidth,
+            useNativeDriver: true,
+          }).start();
+        } else {
+          Animated.spring(slideX, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+        }
+  };
+
+  const minimumGestureSwipeY = 25;
+  const minimumGestureSwipeX = 10;
+  const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > minimumGestureSwipeY,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return (
+          Math.abs(gestureState.dy) > minimumGestureSwipeY ||
+          Math.abs(gestureState.dx) > minimumGestureSwipeX
+        );
+      },
       onPanResponderRelease: (_, gestureState) => {
         // Handle user cancelling his gesture.
         if (Math.abs(gestureState.dy) > minimumGestureSwipeY) {
-          flipAnim.stopAnimation((currentValue: number) => {
-            let isSwipingUp = gestureState.dy < -minimumGestureSwipeY;
-            // console.log("capture gesture = " + gestureState.dy + ", swipping up ==" + isSwipingUp)
-            let currentRoundedValue = Math.round(currentValue);
-            let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
-
-            let shouldReset = Math.abs(nextValue) === 2;
-            // console.log("currentvalue = " + currentValue + " (" + currentRoundedValue+ ")"+ " nextValue:"+ nextValue+ ", shouldReset="+ shouldReset)
-            flipToValue(nextValue, shouldReset);
-          });
+          handleFlipAnimation(gestureState)
+        } else if (Math.abs(gestureState.dx) > minimumGestureSwipeX){
+          handleSlideXAnimation(gestureState)
         }
       },
     }),
   ).current;
-
 
   const rotateX = flipAnim.interpolate({
     inputRange: [-2, -1, 0, 1, 2],
@@ -94,9 +150,8 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
   });
 
   return (
-
-      <View style={styles.container}>
-        <PlayerScoreProvider>
+    <View style={styles.container}>
+      <PlayerScoreProvider>
         <Animated.View
           style={[
             /* eslint-disable-next-line react-native/no-inline-styles */
@@ -112,6 +167,7 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
             operation={
               isFlipped ? constants.operations.SUB : constants.operations.ADD
             }
+            slideX={slideX}
           />
         </Animated.View>
         <Animated.View
@@ -130,14 +186,13 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
             operation={
               isFlipped ? constants.operations.SUB : constants.operations.ADD
             }
+            slideX={slideX}
           />
         </Animated.View>
       </PlayerScoreProvider>
     </View>
   );
-
 };
-
 
 const styles = StyleSheet.create({
   container: {

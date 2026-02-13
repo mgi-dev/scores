@@ -1,11 +1,10 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   Text,
   TextInput,
   View,
   StyleSheet,
   Animated,
-  PanResponder,
 } from 'react-native';
 import {constants} from './constants';
 import {useStore, GameStore} from './services/store';
@@ -22,9 +21,11 @@ const playerWidgetWidth = constants.windowWidth * 0.90;
 export const Player = ({
   playerData,
   operation,
+  slideX
 }: {
   playerData: PlayerData;
   operation: string; // impact style and calculus behaviour
+  slideX: any; // impact style and calculus behaviour
 }) => {
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
@@ -37,33 +38,6 @@ export const Player = ({
   // Get rid of the store or do everything in it even for nothing ?
 
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
-
-  const slideX = useRef(new Animated.Value(0)).current;
-  const actionWidth = 120;
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) =>
-        Math.abs(gestureState.dx) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dx < 0) {
-          slideX.setValue(Math.max(gestureState.dx, -actionWidth));
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -actionWidth / 3) {
-          Animated.spring(slideX, {
-            toValue: -actionWidth,
-            useNativeDriver: true,
-          }).start();
-        } else {
-          Animated.spring(slideX, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
-    }),
-  ).current;
 
   const handleSubmit = () => {
     // this doesn't make any sense.
@@ -83,8 +57,7 @@ export const Player = ({
       <Animated.View
         style={{
           transform: [{translateX: slideX}],
-        }}
-        {...panResponder.panHandlers}>
+        }}>
         <View
           style={[
             playerStyles.playerWidgetContainer,
