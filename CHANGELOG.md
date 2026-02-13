@@ -1,3 +1,9 @@
+## 0.7.0
+### Added
+- Add both way spinning for player widget.
+- bugfixes for name and score inputs.
+- tweak animations trigger and timing.
+
 ## 0.6.0
 ### Added
 - Delete old menu && useless features.

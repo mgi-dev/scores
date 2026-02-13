@@ -30,7 +30,7 @@ export const Player = ({
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
   const resetPlayerScore = () => {
-    setScore(0);
+    setScore('0');
   };
 
   // Data is partially in store. A decision must be made.
@@ -39,7 +39,7 @@ export const Player = ({
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
 
   const slideX = useRef(new Animated.Value(0)).current;
-  const actionWidth = 120; // width for the action buttons
+  const actionWidth = 120;
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) =>
@@ -50,7 +50,7 @@ export const Player = ({
         }
       },
       onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -actionWidth / 2) {
+        if (gestureState.dx < -actionWidth / 3) {
           Animated.spring(slideX, {
             toValue: -actionWidth,
             useNativeDriver: true,
@@ -68,7 +68,7 @@ export const Player = ({
   const handleSubmit = () => {
     // this doesn't make any sense.
     setScore(updateScore(score, addedScore, operation));
-    setAddedScore(0);
+    setAddedScore('0');
   };
 
   return (
@@ -79,7 +79,7 @@ export const Player = ({
           // TODO: smooth left edge.
           onPress={() => {
             resetPlayerScore();
-            setAddedScore(0);
+            setAddedScore('0');
           }}
         />
         <DeleteIcon
@@ -98,10 +98,7 @@ export const Player = ({
         <View
           style={[
             playerStyles.playerWidgetContainer,
-            {
-              backgroundColor:
-                operation === constants.operations.ADD ? '#dff8f7' : '#f8ecec',
-            },
+            operation === constants.operations.ADD ? playerStyles.addWidgetContainer : playerStyles.substractWidgetContainer,
           ]}>
           <Text style={playerStyles.playerName}>{playerData.name}</Text>
           <View style={playerStyles.scoreContainer}>
@@ -110,10 +107,11 @@ export const Player = ({
               style={playerStyles.scoreInput}
               keyboardType="numeric"
               onChangeText={text => {
-                setAddedScore(Number(text));
+                setAddedScore(text);
               }}
               onSubmitEditing={handleSubmit}
-              value={addedScore !== 0 ? String(addedScore) : ''}
+              // Weird condition is here to prevent the display of an immortal "0" on screen.
+              value={addedScore !== '0' ? addedScore : ''}
             />
           </View>
         </View>
@@ -123,7 +121,7 @@ export const Player = ({
 };
 
 const playerStyles = StyleSheet.create({
-  mainContainer:{
+  mainContainer: {
     width: playerWidgetWidth,
     alignSelf: 'center',
   },
@@ -133,6 +131,12 @@ const playerStyles = StyleSheet.create({
     borderRadius: playerWidgetBorderRadius,
     paddingBottom: constants.windowHeight * 0.02,
     backgroundColor: '#f5f5f5',
+  },
+  addWidgetContainer: {
+    backgroundColor: '#dff8f7',
+  },
+  substractWidgetContainer: {
+    backgroundColor: '#f8ecec',
   },
   scoreContainer: {
     flexDirection: 'row',

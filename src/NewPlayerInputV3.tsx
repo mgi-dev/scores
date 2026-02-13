@@ -13,11 +13,13 @@ import {useStore} from './services/store';
 
 export const NewPlayerInputV3 = () => {
   const [showInput, setShowInput] = useState(false);
+  const playerNameInputRef = useRef<TextInput>(null);
+
   const [name, setName] = useState('');
   const addPlayer = useStore((state: any) => state.addPlayer);
   const morphAnim = useRef(new Animated.Value(0)).current; // 0: icon, 1: input
 
-  const animationDuration = 900;
+  const animationDuration = 200;
 
   const animateToInput = () => {
     Animated.timing(morphAnim, {
@@ -25,7 +27,10 @@ export const NewPlayerInputV3 = () => {
       duration: animationDuration,
       useNativeDriver: true,
       easing: Easing.out(Easing.ease),
-    }).start(() => setShowInput(true));
+    }).start(() => {
+      setShowInput(true);
+      playerNameInputRef.current?.focus();
+    });
   };
 
   const animateToIcon = () => {
@@ -42,7 +47,7 @@ export const NewPlayerInputV3 = () => {
   };
 
   const handleValidate = () => {
-    addPlayer(name);
+    addPlayer(name.substring(0, 30));
     setName('');
 
     animateToIcon();
@@ -91,7 +96,7 @@ export const NewPlayerInputV3 = () => {
         style={{
           opacity: inputOpacity,
           transform: [{scale: inputScale}],
-          ...styles.inputMainContainer
+          ...styles.inputMainContainer,
         }}
         pointerEvents={showInput ? 'auto' : 'none'}>
         <View style={styles.inputRow}>
@@ -99,8 +104,9 @@ export const NewPlayerInputV3 = () => {
             style={styles.input}
             value={name}
             onChangeText={setName}
+            onSubmitEditing={handleValidate}
             placeholder="Nom du joueur"
-            autoFocus={showInput}
+            ref={playerNameInputRef}
           />
           <TouchableOpacity
             onPress={handleValidate}

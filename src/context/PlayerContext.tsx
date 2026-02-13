@@ -1,10 +1,10 @@
 import React, {createContext, useState, ReactNode} from 'react';
 
 export interface PlayerContextType {
-  score: number;
-  setScore: (score: number) => void;
-  addedScore: number;
-  setAddedScore: (score: number) => void;
+  score: string;
+  setScore: (score: string) => void;
+  addedScore: string;
+  setAddedScore: (score: string) => void;
 }
 
 export const PlayerScoreContext = createContext<PlayerContextType | undefined>(
@@ -13,8 +13,8 @@ export const PlayerScoreContext = createContext<PlayerContextType | undefined>(
 
 export const PlayerScoreProvider = ({children}: {children: ReactNode}) => {
   // TODO: check this memoize thing.
-  const [score, setScore] = useState(0);
-  const [addedScore, setAddedScore] = useState(0);
+  const [score, setScore] = useState('0');
+  const [addedScore, setAddedScore] = useState('0');
 
   return (
     <PlayerScoreContext.Provider

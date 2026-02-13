@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { constants } from './../constants';
-import { hasWon, updateScore } from './score_service';
+import { hasWon } from './score_service';
 import {PlayerData} from './interfaces';
 
 export interface GameStore {
@@ -27,7 +27,6 @@ export interface GameStore {
 
     deletePLayers: () => void;
     deletePlayer: (playerData: PlayerData) => void;
-    updatePlayerScore: (playerData: PlayerData, addedScore: number) => void
     resetPlayerScore: (playerData: PlayerData) => void
 
 }
@@ -76,12 +75,6 @@ export const useStore = create<GameStore>((set, get: any) => ({
         });
     },
 
-    updatePlayerScore: (newPlayerData: PlayerData, addedScore: number) => {
-        // it's mutating but it's working.
-        newPlayerData.score = updateScore(newPlayerData.score, addedScore, get().operation);
-        newPlayerData.hasWon = get().hasWon(newPlayerData.score);
-        set({playersData: [...get().playersData]});
-    },
 
     resetPlayerScore: (playerData: PlayerData) => {
         playerData.score = get().initialScore;
