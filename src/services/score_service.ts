@@ -3,14 +3,24 @@ import { constants } from '../constants';
 
 export const updateScore = (score: string, difference: string, operation: string) : string => {
     if (isNaN(Number(difference))){
-        // difference should never be NaN. But it can happen Anyway.
-        // This condition handle impossible cases.
+        // Happens when inputing nonsense (.336-, ...)
         return Number(score).toString();
     }
+    if (isNaN(Number(score))){
+        // Happen when playing with ∞ and -∞
+        return "0";
+    }
     if (operation === constants.operations.ADD) {
-        return (Number(score) + Number(difference)).toString();
+        var updatedScore = (Number(score) + Number(difference));
     } else {
-        return (Number(score) - Number(difference)).toString();
+        var updatedScore = (Number(score) - Number(difference));
+    }
+    if (updatedScore > 999999999){
+        return "∞"
+    } else if (updatedScore < -999999999){
+        return "-∞"
+    } else {
+        return updatedScore.toString()
     }
 };
 
