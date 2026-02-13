@@ -5,10 +5,9 @@
 ### Add a substract / add icon to player widget.
 ### Add back scrollview scrolling.
 ### Fix visual glitch when slidding left (see ScreenHiddenMenu.png)
-### Increase speed of PlayerInput animation
-### No AutoInput ????
 ### limit score size
 ### limit player name size
 ### lower Player list just a bit. (Be carefull to arrow up).
 ### When inputing a name, when aborting and pressing back, inpout state should reset.
-### Create Player onSubmit.
+### When inputing a name, make sure the input is visible.
+### When inputing a name, bigg letters doesn't fit ...

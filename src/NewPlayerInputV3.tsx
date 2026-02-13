@@ -13,6 +13,8 @@ import {useStore} from './services/store';
 
 export const NewPlayerInputV3 = () => {
   const [showInput, setShowInput] = useState(false);
+  const playerNameInputRef = useRef<TextInput>(null);
+
   const [name, setName] = useState('');
   const addPlayer = useStore((state: any) => state.addPlayer);
   const morphAnim = useRef(new Animated.Value(0)).current; // 0: icon, 1: input
@@ -25,7 +27,10 @@ export const NewPlayerInputV3 = () => {
       duration: animationDuration,
       useNativeDriver: true,
       easing: Easing.out(Easing.ease),
-    }).start(() => setShowInput(true));
+    }).start(() => {
+      setShowInput(true)
+      playerNameInputRef.current?.focus()
+    });
   };
 
   const animateToIcon = () => {
@@ -101,7 +106,7 @@ export const NewPlayerInputV3 = () => {
             onChangeText={setName}
             onSubmitEditing={handleValidate}
             placeholder="Nom du joueur"
-            autoFocus={showInput}
+            ref={playerNameInputRef}
           />
           <TouchableOpacity
             onPress={handleValidate}
