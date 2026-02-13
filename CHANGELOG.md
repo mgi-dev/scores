@@ -1,3 +1,7 @@
+## 0.7.2
+### Fixed
+- Fix hidden menu background color.
+
 ## 0.7.1
 ### Fixed
 - Fix ghost flipping when user cancel gesture.

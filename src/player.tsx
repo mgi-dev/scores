@@ -16,7 +16,7 @@ import {updateScore} from './services/score_service';
 import {usePlayerScoreContext} from './context/PlayerContext';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
-const playerWidgetWidth = constants.windowWidth * 0.90; // to smooth the edges of player widget.
+const playerWidgetWidth = constants.windowWidth * 0.90;
 
 
 

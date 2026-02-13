@@ -18,7 +18,9 @@ export const ResetIcon = ({ style, iconStyle, onPress }: EditIconProps) => {
 
 const styles = StyleSheet.create({
   actionButton: {
-    width: 60,
+    // + 20 is for continuity with background color. A cheap fix.
+    width: 60 + 20,
+    paddingLeft: 20,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
