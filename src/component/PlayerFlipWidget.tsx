@@ -60,19 +60,24 @@ export const PlayerFlipWidget = (props: {playerData: PlayerData}) => {
     });
   };
 
-
+    const minimumGestureSwipeY = 25
     const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 30,
+      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > minimumGestureSwipeY,
       onPanResponderRelease: (_, gestureState) => {
-        flipAnim.stopAnimation((currentValue: number) => {
-          let isSwipingUp = gestureState.dy < -30;
-          let currentRoundedValue = Math.round(currentValue);
-          let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
+        // Handle user cancelling his gesture.
+        if (Math.abs(gestureState.dy) > minimumGestureSwipeY) {
+          flipAnim.stopAnimation((currentValue: number) => {
+            let isSwipingUp = gestureState.dy < -minimumGestureSwipeY;
+            // console.log("capture gesture = " + gestureState.dy + ", swipping up ==" + isSwipingUp)
+            let currentRoundedValue = Math.round(currentValue);
+            let nextValue = isSwipingUp ? currentRoundedValue + 1 : currentRoundedValue - 1;
 
-          let shouldReset = Math.abs(nextValue) === 2;
-          flipToValue(nextValue, shouldReset);
-        });
+            let shouldReset = Math.abs(nextValue) === 2;
+            // console.log("currentvalue = " + currentValue + " (" + currentRoundedValue+ ")"+ " nextValue:"+ nextValue+ ", shouldReset="+ shouldReset)
+            flipToValue(nextValue, shouldReset);
+          });
+        }
       },
     }),
   ).current;

@@ -1,3 +1,7 @@
+## 0.7.1
+### Fixed
+- Fix ghost flipping when user cancel gesture.
+
 ## 0.7.0
 ### Added
 - Add both way spinning for player widget.
