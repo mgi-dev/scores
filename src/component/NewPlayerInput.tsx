@@ -8,8 +8,8 @@ import {
   Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {constants} from './constants';
-import {useStore} from './service/store';
+import {constants} from '../service/constants';
+import {useStore} from '../service/store';
 
 export const NewPlayerInput = () => {
   const [showInput, setShowInput] = useState(false);

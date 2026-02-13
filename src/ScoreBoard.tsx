@@ -3,10 +3,10 @@ import {ScrollView, Text, View, StyleSheet} from 'react-native';
 
 import {GameStore, useStore} from './service/store';
 import {PlayerData} from './service/interfaces';
-import {constants} from './constants';
-import {NewPlayerInput} from './NewPlayerInput';
-import {DeletePlayersButton} from './DeletePlayersButton';
-import {AddDebugPlayersButton} from './AddDebugPlayersButton';
+import {constants} from './service/constants';
+import {NewPlayerInput} from './component/NewPlayerInput';
+import {DeletePlayersButton} from './component/DeletePlayersButton';
+import {AddDebugPlayersButton} from './component/AddDebugPlayersButton';
 import {AnimatedPlayerWidget} from './component/AnimatedPlayerWidget';
 import {PressableIcon} from './component/icon/PressableIcon';
 

@@ -7,7 +7,7 @@
 
 import React from 'react';
 
-import {ScoreBoard} from './src/scoreBoard';
+import {ScoreBoard} from './src/ScoreBoard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 

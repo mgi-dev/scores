@@ -1,4 +1,4 @@
-import { constants } from '../constants';
+import { constants } from './constants';
 
 
 export const updateScore = (score: string, difference: string, operation: string) : string => {

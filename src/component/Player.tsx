@@ -6,12 +6,12 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import {constants} from './constants';
-import {useStore, GameStore} from './service/store';
-import {PlayerData} from './service/interfaces';
-import {updateScore} from './service/score_service';
-import {usePlayerScoreContext} from './context/PlayerContext';
-import { HiddenPlayerMenu } from './component/hiddenPlayerMenu';
+import {constants} from '../service/constants';
+import {useStore, GameStore} from '../service/store';
+import {PlayerData} from '../service/interfaces';
+import {updateScore} from '../service/score_service';
+import {usePlayerScoreContext} from '../context/PlayerContext';
+import { HiddenPlayerMenu } from './HiddenPlayerMenu';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 const playerWidgetWidth = constants.windowWidth * 0.90;
