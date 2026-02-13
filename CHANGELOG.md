@@ -1,3 +1,7 @@
+## 0.7.3
+### Fixed
+- Link state between player components.
+
 ## 0.7.2
 ### Fixed
 - Fix hidden menu background color.

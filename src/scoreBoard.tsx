@@ -7,7 +7,7 @@ import {constants} from './constants';
 import {NewPlayerInputV3} from './NewPlayerInputV3';
 import {DeletePlayersButton} from './DeletePlayersButton';
 import {AddDebugPlayersButton} from './AddDebugPlayersButton';
-import {PlayerFlipWidget} from './component/PlayerFlipWidget';
+import {AnimatedPlayerWidget} from './component/AnimatedPlayerWidget';
 import {PressableIcon} from './component/icon/PressableIcon';
 
 
@@ -93,7 +93,7 @@ export const ScoreBoard = () => {
 
           contentContainerStyle={styles.playerListContainer}>
           {playersData.map((item: PlayerData) => (
-              <PlayerFlipWidget key={item.key} playerData={item} />
+              <AnimatedPlayerWidget key={item.key} playerData={item} />
           ))}
           {getDevContent()}
           <NewPlayerInputV3 />

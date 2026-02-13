@@ -1,19 +1,17 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   Text,
   TextInput,
   View,
   StyleSheet,
   Animated,
-  PanResponder,
 } from 'react-native';
 import {constants} from './constants';
 import {useStore, GameStore} from './services/store';
 import {PlayerData} from './services/interfaces';
-import {DeleteIcon} from './component/icon/DeleteIcon';
-import {ResetIcon} from './component/icon/ResetIcon';
 import {updateScore} from './services/score_service';
 import {usePlayerScoreContext} from './context/PlayerContext';
+import { HiddenPlayerMenu } from './component/hiddenPlayerMenu';
 
 const playerWidgetBorderRadius = 8; // to smooth the edges of player widget.
 const playerWidgetWidth = constants.windowWidth * 0.90;
@@ -23,47 +21,23 @@ const playerWidgetWidth = constants.windowWidth * 0.90;
 export const Player = ({
   playerData,
   operation,
+  slideX,
 }: {
   playerData: PlayerData;
   operation: string; // impact style and calculus behaviour
+  slideX: Animated.Value;
 }) => {
   const {score, setScore, addedScore, setAddedScore} = usePlayerScoreContext();
 
   const resetPlayerScore = () => {
     setScore('0');
+    setAddedScore('0');
   };
 
   // Data is partially in store. A decision must be made.
   // Get rid of the store or do everything in it even for nothing ?
 
   const deletePlayer = useStore((state: GameStore) => state.deletePlayer);
-
-  const slideX = useRef(new Animated.Value(0)).current;
-  const actionWidth = 120;
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) =>
-        Math.abs(gestureState.dx) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dx < 0) {
-          slideX.setValue(Math.max(gestureState.dx, -actionWidth));
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -actionWidth / 3) {
-          Animated.spring(slideX, {
-            toValue: -actionWidth,
-            useNativeDriver: true,
-          }).start();
-        } else {
-          Animated.spring(slideX, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
-    }),
-  ).current;
 
   const handleSubmit = () => {
     // this doesn't make any sense.
@@ -73,28 +47,17 @@ export const Player = ({
 
   return (
     <View style={playerStyles.mainContainer}>
-      <View style={playerStyles.actionContainer}>
-        {/* Hidden menu behind player widget, revealed by panResponder */}
-        <ResetIcon
-          // TODO: smooth left edge.
-          onPress={() => {
-            resetPlayerScore();
-            setAddedScore('0');
-          }}
-        />
-        <DeleteIcon
-          onPress={() => deletePlayer(playerData)}
-          style={{
-            borderBottomRightRadius: playerWidgetBorderRadius,
-            borderTopRightRadius: playerWidgetBorderRadius,
-          }}
-        />
-      </View>
+      <HiddenPlayerMenu
+        onReset={()=> {
+          resetPlayerScore();
+        }}
+        onDelete={()=>{deletePlayer(playerData);}}
+        customBorderRadius={8}
+      />
       <Animated.View
         style={{
           transform: [{translateX: slideX}],
-        }}
-        {...panResponder.panHandlers}>
+        }}>
         <View
           style={[
             playerStyles.playerWidgetContainer,
@@ -158,15 +121,5 @@ const playerStyles = StyleSheet.create({
   },
   score: {
     fontSize: constants.bigFont,
-  },
-  actionContainer: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: '100%',
-    zIndex: -1,
   },
 });
